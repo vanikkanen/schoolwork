@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE System SYSTEM "https://www.holobloc.com/xml/LibraryElement.dtd" >
+<System Name="DispenserMachine" Comment="Dispenser" >
+  <Identification Standard="61499-1" />
+  <VersionInfo Organization="Holobloc Inc." Version="0.4" Author="JHC" Date="2009-03-05" Remarks="Deleted Application." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.3" Author="JHC" Date="2003-12-05" Remarks="Renamed from NEWSYSTEM." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.2" Author="JHC" Date="2002-11-05" Remarks="Fixed missing (empty) FBD in Application." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-01-17" Remarks="Minor cleanup" />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2000-05-27" />
+<CompilerInfo packageName="fb.rt.Conveyer" >
+  <Import declaration="fb.datatype.*" />
+  <Import declaration="fb.rt.*" />
+  <Import declaration="fb.rt.hmi.FRAME_DEVICE" />
+  <Import declaration="java.awt.*" />
+</CompilerInfo>
+  <Device Name="CoinsDetectorDevice" Type="FRAME_DEVICE" x="1705.5555" y="655.55554" >
+    <Parameter Name="BOUNDS" Value="[0,0,200,300]" />
+    <Resource Name="RES" Type="VIEW_PANEL" x="894.4444" y="305.55554" >
+      <Parameter Name="SIZE" Value="[10,15]" />
+      <Parameter Name="DIA" Value="20" />
+      <FBNetwork >
+        <FB Name="coin1Event" Type="OUT_EVENT" x="3922.2222" y="283.3333" >
+          <Parameter Name="LABEL" Value="&#34;coin1Event&#34;" />
+          <Parameter Name="FLASH" Value="[0,0,255]" />
+          <Parameter Name="DT" Value="t#100ms" />
+          <Parameter Name="QI" Value="1" />
+        </FB>
+        <FB Name="coin5Event" Type="OUT_EVENT" x="3833.3333" y="1550.0" >
+          <Parameter Name="LABEL" Value="&#34;Coin5Event&#34;" />
+          <Parameter Name="FLASH" Value="[0,0,255]" />
+          <Parameter Name="DT" Value="t#100ms" />
+          <Parameter Name="QI" Value="1" />
+        </FB>
+        <FB Name="Coin1EventVal" Type="PUBL_0" x="2822.2222" y="566.6666" >
+        </FB>
+        <FB Name="Coin5EventVal" Type="PUBL_0" x="2355.5554" y="0.0" >
+        </FB>
+        <EventConnections>
+          <Connection Source="coin1Event.INITO" Destination="coin5Event.INIT" dx1="161.1111" dx2="55.555553" dy="1350.0" />
+          <Connection Source="Coin5EventVal.INITO" Destination="Coin1EventVal.INIT" dx1="188.88889" />
+          <Connection Source="Coin1EventVal.INITO" Destination="coin1Event.INIT" dx1="55.555553" />
+        </EventConnections>
+      </FBNetwork>
+    </Resource>
+  </Device>
+  <Device Name="HMIDevice" Type="FRAME_DEVICE" x="616.6666" y="616.6666" >
+    <Parameter Name="BOUNDS" Value="[0,0,200,300]" />
+    <Resource Name="RES" Type="VIEW_PANEL" x="377.77777" y="1072.2222" >
+      <Parameter Name="SIZE" Value="[10,15]" />
+      <Parameter Name="DIA" Value="20" />
+      <FBNetwork >
+        <FB Name="selectProduct" Type="IN_CHOICE" x="1138.8888" y="94.44444" >
+          <Parameter Name="QI" Value="1" />
+          <Parameter Name="CHOICES" Value="&#34;coke,chocolate,proteinbar&#34;" />
+        </FB>
+        <FB Name="SelectedPrice" Type="OUT_ANY" x="3738.8887" y="194.44444" >
+          <Parameter Name="TYPE" Value="&#34;UINT&#34;" />
+          <Parameter Name="W" Value="4" />
+          <Parameter Name="QI" Value="1" />
+        </FB>
+        <FB Name="UpdateBalVal" Type="SUBL_1" x="533.3333" y="1277.7777" >
+        </FB>
+        <FB Name="ProdSelectedVal" Type="PUBL_2" x="3299.9998" y="1433.3333" >
+        </FB>
+        <EventConnections>
+          <Connection Source="START.COLD" Destination="selectProduct.INIT" dx1="150.0" />
+          <Connection Source="SelectedPrice.INITO" Destination="UpdateBalVal.INIT" dx1="55.555553" dx2="444.44443" dy="2416.6665" />
+        </EventConnections>
+        <DataConnections>
+          <Connection Source="selectProduct.I" Destination="ProdSelectedVal.SD_2" dx1="800.0" />
+        </DataConnections>
+      </FBNetwork>
+    </Resource>
+  </Device>
+  <Device Name="ControlDevice" Type="FRAME_DEVICE" x="688.88885" y="1388.8888" >
+    <Parameter Name="BOUNDS" Value="[0,0,200,300]" />
+    <Resource Name="RES" Type="VIEW_PANEL" x="894.4444" y="305.55554" >
+      <Parameter Name="SIZE" Value="[10,15]" />
+      <Parameter Name="DIA" Value="20" />
+      <FBNetwork >
+        <FB Name="UpdateBalVal" Type="PUBL_1" x="5644.4443" y="722.22217" >
+        </FB>
+        <FB Name="Coin5EventVal" Type="SUBL_0" x="1133.3333" y="22.222221" >
+        </FB>
+        <FB Name="Coin1EventVal" Type="SUBL_0" x="1811.1111" y="33.333332" >
+        </FB>
+        <FB Name="dispenseEvent" Type="OUT_EVENT" x="3816.6665" y="2166.6665" >
+          <Parameter Name="LABEL" Value="&#34;dispenseEvent&#34;" />
+          <Parameter Name="FLASH" Value="[0,0,255]" />
+          <Parameter Name="DT" Value="t#100ms" />
+          <Parameter Name="QI" Value="1" />
+        </FB>
+        <FB Name="dispenseVariable" Type="OUT_ANY" x="1622.2222" y="2227.7776" >
+          <Parameter Name="TYPE" Value="&#34;BOOL&#34;" />
+          <Parameter Name="W" Value="4" />
+          <Parameter Name="QI" Value="1" />
+        </FB>
+        <FB Name="DispenseProductVal" Type="PUBL_1" x="4355.555" y="50.0" >
+        </FB>
+        <FB Name="ProdSelectedVal" Type="SUBL_2" x="555.55554" y="266.66666" >
+        </FB>
+        <FB Name="myControl" Type="ControlDispenser" x="2822.2222" y="383.3333" >
+        </FB>
+        <EventConnections>
+          <Connection Source="Coin5EventVal.INITO" Destination="Coin1EventVal.INIT" dx1="55.555553" />
+          <Connection Source="UpdateBalVal.INITO" Destination="dispenseVariable.INIT" dx1="183.33333" dx2="255.55554" dy="1372.2222" />
+          <Connection Source="dispenseVariable.INITO" Destination="dispenseEvent.INIT" dx1="55.555553" />
+          <Connection Source="START.COLD" Destination="ProdSelectedVal.INIT" dx1="55.555553" />
+          <Connection Source="ProdSelectedVal.INITO" Destination="Coin5EventVal.INIT" dx1="55.555553" />
+          <Connection Source="DispenseProductVal.INITO" Destination="UpdateBalVal.INIT" dx1="55.555553" dx2="55.555553" dy="1066.6666" />
+        </EventConnections>
+      </FBNetwork>
+    </Resource>
+  </Device>
+  <Device Name="DispenserMechanism" Type="FRAME_DEVICE" x="1694.4443" y="1438.8888" >
+    <Parameter Name="BOUNDS" Value="[0,0,200,300]" />
+    <Resource Name="RES" Type="VIEW_PANEL" x="377.77777" y="1072.2222" >
+      <Parameter Name="SIZE" Value="[10,15]" />
+      <Parameter Name="DIA" Value="20" />
+      <FBNetwork >
+        <FB Name="MotorSelector" Type="E_DEMUX" x="1805.5555" y="272.2222" >
+        </FB>
+        <FB Name="delay" Type="E_DELAY" x="1488.8888" y="1933.3333" >
+          <Parameter Name="DT" Value="t#3000ms" />
+        </FB>
+        <FB Name="Motor1" Type="E_SR" x="3122.2222" y="177.77777" >
+        </FB>
+        <FB Name="Motor1State" Type="OUT_BOOL" x="4877.778" y="333.3333" >
+          <Parameter Name="LABEL" Value="&#34;Motor1-Product1&#34;" />
+          <Parameter Name="QI" Value="1" />
+        </FB>
+        <FB Name="DispenseProductVal" Type="SUBL_1" x="711.1111" y="11.111111" >
+        </FB>
+        <EventConnections>
+          <Connection Source="START.COLD" Destination="DispenseProductVal.INIT" dx1="55.555553" />
+          <Connection Source="DispenseProductVal.IND" Destination="MotorSelector.EI" dx1="55.555553" />
+        </EventConnections>
+        <DataConnections>
+          <Connection Source="DispenseProductVal.RD_1" Destination="MotorSelector.K" dx1="144.44444" />
+        </DataConnections>
+      </FBNetwork>
+    </Resource>
+  </Device>
+</System>

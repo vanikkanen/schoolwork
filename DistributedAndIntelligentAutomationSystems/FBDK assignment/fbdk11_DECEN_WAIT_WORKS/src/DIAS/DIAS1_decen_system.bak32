@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE System SYSTEM "https://www.holobloc.com/xml/LibraryElement.dtd" >
+<System Name="DIAS1_decen_system" Comment="System Configuration" >
+  <Identification Standard="61499-1" />
+  <VersionInfo Organization="Holobloc Inc." Version="0.4" Author="JHC" Date="2009-03-05" Remarks="Deleted Application." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.3" Author="JHC" Date="2003-12-05" Remarks="Renamed from NEWSYSTEM." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.2" Author="JHC" Date="2002-11-05" Remarks="Fixed missing (empty) FBD in Application." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-01-17" Remarks="Minor cleanup" />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2000-05-27" />
+<CompilerInfo packageName="fb.rt.DIAS" >
+  <Import declaration="fb.datatype.*" />
+  <Import declaration="fb.rt.*" />
+  <Import declaration="fb.rt.hmi.FRAME_DEVICE" />
+  <Import declaration="java.awt.*" />
+</CompilerInfo>
+  <Device Name="CTL_PANEL" Type="FRAME_DEVICE" x="794.4444" y="444.44443" >
+    <Parameter Name="BOUNDS" Value="[50,100,425,100]" />
+    <Parameter Name="GRID" Value="[1,1]" />
+    <Resource Name="CTL_PANEL" Type="PANEL_RESOURCE" x="461.11108" y="466.66666" >
+      <FBNetwork >
+        <FB Name="GREEN_TIME" Type="IN_ANY" x="1183.3333" y="127.77777" >
+          <Parameter Name="QI" Value="1" />
+          <Parameter Name="IVAL" Value="t#3s" />
+          <Parameter Name="TYPE" Value="&#34;TIME&#34;" />
+        </FB>
+        <FB Name="YELLOW_TIME" Type="IN_ANY" x="1994.4443" y="150.0" >
+          <Parameter Name="QI" Value="1" />
+          <Parameter Name="IVAL" Value="t#2s" />
+          <Parameter Name="TYPE" Value="&#34;TIME&#34;" />
+        </FB>
+        <FB Name="SEM1" Type="SEM" x="4333.333" y="1166.6666" >
+        </FB>
+        <FB Name="SEMA_VIEW_1" Type="SEMA_VIEW" x="5244.4443" y="1127.7777" >
+        </FB>
+        <FB Name="RUN" Type="IN_EVENT" x="561.1111" y="222.22221" >
+          <Parameter Name="LABEL" Value="&#34;RUN&#34;" />
+          <Parameter Name="QI" Value="1" />
+        </FB>
+        <FB Name="GREEN_DELAY" Type="E_DELAY" x="1672.2222" y="1200.0" >
+        </FB>
+        <FB Name="CTRL_1" Type="CTRL_SEMA" x="3222.2222" y="111.11111" >
+        </FB>
+        <FB Name="YELLOW_DELAY" Type="E_DELAY" x="2438.889" y="1205.5555" >
+        </FB>
+        <FB Name="NEXT_L1" Type="PUBL_0" x="4272.222" y="116.666664" >
+        </FB>
+        <FB Name="NEXT_L2" Type="SUBL_0" x="2522.2222" y="127.77777" >
+        </FB>
+        <FB Name="TICKER" Type="E_CYCLE" x="1038.8888" y="2566.6665" >
+          <Parameter Name="DT" Value="t#1s" />
+        </FB>
+        <FB Name="OUT_TEXT" Type="OUT_ANY" x="3416.6665" y="1927.7777" >
+          <Parameter Name="QI" Value="1" />
+          <Parameter Name="TYPE" Value="&#34;INT&#34;" />
+          <Parameter Name="IVAL" Value="0" />
+        </FB>
+        <FB Name="SUB_TIMER" Type="SUB_TIME_TIME" x="2188.889" y="2494.4443" >
+          <Parameter Name="IN_2" Value="t#1s" />
+        </FB>
+        <FB Name="SMALL_DELAY" Type="E_DELAY" x="488.88885" y="2666.6665" >
+          <Parameter Name="DT" Value="t#400ms" />
+        </FB>
+        <EventConnections>
+          <Connection Source="GREEN_TIME.INITO" Destination="YELLOW_TIME.INIT" dx1="55.555553" dx2="55.555553" dy="1433.3333" />
+          <Connection Source="SEM1.INITO" Destination="SEMA_VIEW_1.INIT" dx1="55.555553" />
+          <Connection Source="START.COLD" Destination="RUN.INIT" dx1="55.555553" />
+          <Connection Source="RUN.INITO" Destination="GREEN_TIME.INIT" dx1="55.555553" />
+          <Connection Source="SEM1.CNF" Destination="SEMA_VIEW_1.REQ" dx1="55.555553" />
+          <Connection Source="RUN.IND" Destination="CTRL_1.PREV_CTRL" dx1="55.555553" />
+          <Connection Source="CTRL_1.GREEN_O" Destination="GREEN_DELAY.START" dx1="105.55555" dx2="55.555553" dy="1699.9999" />
+          <Connection Source="GREEN_DELAY.EO" Destination="CTRL_1.GREEN_I" dx1="55.555553" />
+          <Connection Source="CTRL_1.YELLOW_O" Destination="YELLOW_DELAY.START" dx1="55.555553" dx2="55.555553" dy="977.7777" />
+          <Connection Source="YELLOW_DELAY.EO" Destination="CTRL_1.YELLOW_I" dx1="55.555553" dx2="55.555553" dy="83.33333" />
+          <Connection Source="CTRL_1.NEXT_CTRL" Destination="SEM1.REQ" dx1="55.555553" />
+          <Connection Source="CTRL_1.YELLOW_O" Destination="SEM1.REQ" dx1="55.555553" />
+          <Connection Source="CTRL_1.GREEN_O" Destination="SEM1.REQ" dx1="55.555553" />
+          <Connection Source="CTRL_1.NEXT_CTRL" Destination="NEXT_L1.REQ" dx1="55.555553" />
+          <Connection Source="CTRL_1.INITO" Destination="NEXT_L1.INIT" dx1="55.555553" />
+          <Connection Source="NEXT_L1.INITO" Destination="SEM1.INIT" dx1="55.555553" dx2="55.555553" dy="1133.3333" />
+          <Connection Source="YELLOW_TIME.INITO" Destination="NEXT_L2.INIT" dx1="55.555553" />
+          <Connection Source="NEXT_L2.INITO" Destination="CTRL_1.INIT" dx1="55.555553" />
+          <Connection Source="NEXT_L2.IND" Destination="CTRL_1.PREV_CTRL" dx1="55.555553" />
+          <Connection Source="RUN.INITO" Destination="OUT_TEXT.INIT" dx1="111.11111" />
+          <Connection Source="GREEN_TIME.IND" Destination="CTRL_1.UPDATE_TIME" dx1="55.555553" />
+          <Connection Source="YELLOW_TIME.IND" Destination="CTRL_1.UPDATE_TIME" dx1="55.555553" />
+          <Connection Source="CTRL_1.GREEN_O" Destination="TICKER.START" dx1="55.555553" dx2="55.555553" dy="2077.7776" />
+          <Connection Source="TICKER.EO" Destination="SUB_TIMER.REQ" dx1="55.555553" />
+          <Connection Source="CTRL_1.GREEN_O" Destination="OUT_TEXT.REQ" dx1="55.555553" dx2="55.555553" dy="2072.2222" />
+          <Connection Source="SUB_TIMER.CNF" Destination="OUT_TEXT.REQ" dx1="55.555553" />
+          <Connection Source="GREEN_DELAY.EO" Destination="SUB_TIMER.RESET" dx1="55.555553" />
+          <Connection Source="CTRL_1.YELLOW_O" Destination="TICKER.START" dx1="55.555553" dx2="55.555553" dy="1844.4443" />
+          <Connection Source="YELLOW_DELAY.EO" Destination="SUB_TIMER.RESET" dx1="55.555553" dx2="55.555553" dy="1572.2222" />
+          <Connection Source="CTRL_1.GREEN_O" Destination="SUB_TIMER.REQ" dx1="55.555553" dx2="55.555553" dy="2322.2222" />
+          <Connection Source="CTRL_1.YELLOW_O" Destination="SUB_TIMER.REQ" dx1="55.555553" dx2="55.555553" dy="2211.111" />
+          <Connection Source="SMALL_DELAY.EO" Destination="TICKER.STOP" dx1="55.555553" />
+          <Connection Source="YELLOW_DELAY.EO" Destination="SMALL_DELAY.START" dx1="55.555553" dx2="55.555553" dy="938.88885" />
+        </EventConnections>
+        <DataConnections>
+          <Connection Source="SEM1.GREEN" Destination="SEMA_VIEW_1.LED2" dx1="55.555553" />
+          <Connection Source="SEM1.YELLOW" Destination="SEMA_VIEW_1.LED1" dx1="55.555553" />
+          <Connection Source="SEM1.RED" Destination="SEMA_VIEW_1.LED0" dx1="55.555553" />
+          <Connection Source="CTRL_1.MODE" Destination="SEM1.MODE" dx1="55.555553" />
+          <Connection Source="GREEN_TIME.OUT" Destination="CTRL_1.GREEN_TIME" dx1="55.555553" />
+          <Connection Source="YELLOW_TIME.OUT" Destination="CTRL_1.YELLOW_TIME" dx1="55.555553" />
+          <Connection Source="SUB_TIMER.OUT" Destination="OUT_TEXT.IN" dx1="55.555553" />
+          <Connection Source="CTRL_1.TIME_OUT" Destination="GREEN_DELAY.DT" dx1="55.555553" dx2="55.555553" dy="727.7778" />
+          <Connection Source="CTRL_1.TIME_OUT" Destination="YELLOW_DELAY.DT" dx1="55.555553" dx2="55.555553" dy="738.88885" />
+          <Connection Source="CTRL_1.TIME_OUT" Destination="SUB_TIMER.IN_1" dx1="55.555553" dx2="55.555553" dy="1566.6666" />
+        </DataConnections>
+      </FBNetwork>
+    </Resource>
+  </Device>
+  <Device Name="CTL_PANEL_2" Type="FRAME_DEVICE" x="2005.5554" y="455.55554" >
+    <Parameter Name="BOUNDS" Value="[50,200,425,100]" />
+    <Parameter Name="GRID" Value="[1,2]" />
+    <Resource Name="CTL_PANEL" Type="PANEL_RESOURCE" x="461.11108" y="466.66666" >
+      <FBNetwork >
+        <FB Name="GREEN_TIME" Type="IN_ANY" x="972.22217" y="138.88889" >
+          <Parameter Name="QI" Value="1" />
+          <Parameter Name="IVAL" Value="t#1000ms" />
+          <Parameter Name="TYPE" Value="&#34;TIME&#34;" />
+        </FB>
+        <FB Name="YELLOW_TIME" Type="IN_ANY" x="1644.4443" y="155.55554" >
+          <Parameter Name="QI" Value="1" />
+          <Parameter Name="IVAL" Value="t#1000ms" />
+          <Parameter Name="TYPE" Value="&#34;TIME&#34;" />
+        </FB>
+        <FB Name="SEM1" Type="SEM" x="4572.222" y="805.55554" >
+        </FB>
+        <FB Name="SEMA_VIEW_1" Type="SEMA_VIEW" x="6005.555" y="805.55554" >
+        </FB>
+        <FB Name="RUN" Type="IN_EVENT" x="561.1111" y="222.22221" >
+          <Parameter Name="LABEL" Value="&#34;RUN&#34;" />
+          <Parameter Name="QI" Value="1" />
+        </FB>
+        <FB Name="GREEN_DELAY" Type="E_DELAY" x="2783.3333" y="2005.5554" >
+        </FB>
+        <FB Name="CTRL_1" Type="CTRL_SEMA" x="2722.2222" y="166.66666" >
+        </FB>
+        <FB Name="YELLOW_DELAY" Type="E_DELAY" x="3388.8887" y="2111.111" >
+        </FB>
+        <FB Name="NEXT_L2" Type="PUBL_0" x="3722.2222" y="177.77777" >
+        </FB>
+        <FB Name="NEXT_L1" Type="SUBL_0" x="2194.4443" y="177.77777" >
+        </FB>
+        <EventConnections>
+          <Connection Source="GREEN_TIME.INITO" Destination="YELLOW_TIME.INIT" dx1="55.555553" dx2="55.555553" dy="1433.3333" />
+          <Connection Source="SEM1.INITO" Destination="SEMA_VIEW_1.INIT" dx1="55.555553" />
+          <Connection Source="START.COLD" Destination="RUN.INIT" dx1="55.555553" />
+          <Connection Source="RUN.INITO" Destination="GREEN_TIME.INIT" dx1="55.555553" />
+          <Connection Source="SEM1.CNF" Destination="SEMA_VIEW_1.REQ" dx1="55.555553" />
+          <Connection Source="GREEN_TIME.IND" Destination="GREEN_DELAY.STOP" dx1="55.555553" />
+          <Connection Source="RUN.IND" Destination="CTRL_1.PREV_CTRL" dx1="55.555553" />
+          <Connection Source="CTRL_1.GREEN_O" Destination="GREEN_DELAY.START" dx1="55.555553" dx2="55.555553" dy="1699.9999" />
+          <Connection Source="GREEN_DELAY.EO" Destination="CTRL_1.GREEN_I" dx1="55.555553" dx2="55.555553" dy="83.33333" />
+          <Connection Source="YELLOW_TIME.IND" Destination="YELLOW_DELAY.STOP" dx1="55.555553" />
+          <Connection Source="CTRL_1.YELLOW_O" Destination="YELLOW_DELAY.START" dx1="55.555553" dx2="55.555553" dy="977.7777" />
+          <Connection Source="YELLOW_DELAY.EO" Destination="CTRL_1.YELLOW_I" dx1="55.555553" dx2="55.555553" dy="83.33333" />
+          <Connection Source="CTRL_1.NEXT_CTRL" Destination="SEM1.REQ" dx1="55.555553" />
+          <Connection Source="CTRL_1.YELLOW_O" Destination="SEM1.REQ" dx1="55.555553" />
+          <Connection Source="CTRL_1.GREEN_O" Destination="SEM1.REQ" dx1="55.555553" />
+          <Connection Source="CTRL_1.NEXT_CTRL" Destination="NEXT_L2.REQ" dx1="55.555553" />
+          <Connection Source="CTRL_1.INITO" Destination="NEXT_L2.INIT" dx1="55.555553" />
+          <Connection Source="NEXT_L2.INITO" Destination="SEM1.INIT" dx1="55.555553" dx2="55.555553" dy="1133.3333" />
+          <Connection Source="YELLOW_TIME.INITO" Destination="NEXT_L1.INIT" dx1="55.555553" />
+          <Connection Source="NEXT_L1.INITO" Destination="CTRL_1.INIT" dx1="55.555553" />
+          <Connection Source="NEXT_L1.IND" Destination="CTRL_1.PREV_CTRL" dx1="55.555553" />
+        </EventConnections>
+        <DataConnections>
+          <Connection Source="SEM1.GREEN" Destination="SEMA_VIEW_1.LED2" dx1="55.555553" />
+          <Connection Source="SEM1.YELLOW" Destination="SEMA_VIEW_1.LED1" dx1="55.555553" />
+          <Connection Source="SEM1.RED" Destination="SEMA_VIEW_1.LED0" dx1="55.555553" />
+          <Connection Source="GREEN_TIME.OUT" Destination="GREEN_DELAY.DT" dx1="55.555553" />
+          <Connection Source="YELLOW_TIME.OUT" Destination="YELLOW_DELAY.DT" dx1="55.555553" />
+          <Connection Source="CTRL_1.MODE" Destination="SEM1.MODE" dx1="55.555553" />
+        </DataConnections>
+      </FBNetwork>
+    </Resource>
+  </Device>
+</System>

@@ -1,0 +1,102 @@
+/* Copyright (c)2023 Holobloc Inc. All rights reserved. */
+package fb.rt.DIAS;
+import fb.datatype.*;
+import fb.rt.*;
+/** FUNCTION_BLOCK SEM (* Basic Function Block Type *)
+  * @author JHC
+  * @version 20230327/JHC - Generated.
+  */
+public class SEM extends fb.rt.FBInstance {
+/** The index (0) of state START. */
+public static final int INDEX_START = 0;
+/** The index (1) of state INIT. */
+public static final int INDEX_INIT = 1;
+/** The index (2) of state REQ. */
+public static final int INDEX_REQ = 2;
+/** Initialization Confirm */
+public final EventOutput INITO = new EventOutput();
+/** EVENT CNF */
+public final EventOutput CNF = new EventOutput();
+/** Initialization Request */
+public final EventServer INIT = (e) -> service_INIT();
+/** EVENT REQ */
+public final EventServer REQ = (e) -> service_REQ();
+/** VAR MODE:INT */
+  public INT MODE = new INT();
+/** VAR TIME_IN:TIME */
+  public TIME TIME_IN = new TIME();
+/** VAR GREEN:BOOL */
+  public final BOOL GREEN = new BOOL();
+/** VAR YELLOW:BOOL */
+  public final BOOL YELLOW = new BOOL();
+/** VAR RED:BOOL */
+  public final BOOL RED = new BOOL();
+/** VAR TIME_OUT:TIME */
+  public final TIME TIME_OUT = new TIME();
+/** The default constructor. */
+public SEM(){
+    super();
+  }
+protected synchronized void service_INIT(){
+  if(eccState == INDEX_START){
+    state_INIT();
+  }
+}
+protected synchronized void service_REQ(){
+  if(eccState == INDEX_START){
+    state_REQ();
+  }
+}
+/** The actions to take upon entering state START. */
+void state_START(){
+   eccState = INDEX_START;
+}
+/** The actions to take upon entering state INIT. */
+void state_INIT(){
+   eccState = INDEX_INIT;
+   alg_INIT();
+   INITO.serviceEvent(this);
+   state_START();
+}
+/** The actions to take upon entering state REQ. */
+void state_REQ(){
+   eccState = INDEX_REQ;
+   alg_LIGHT_ALG();
+   CNF.serviceEvent(this);
+   alg_TIME_ALG();
+   CNF.serviceEvent(this);
+   state_START();
+}
+  /** ALGORITHM INIT IN ST
+ * Initialization algorithm
+ */
+public void alg_INIT(){
+GREEN.value = false;
+YELLOW.value = false;
+RED.value = true;
+}
+  /** ALGORITHM LIGHT_ALG IN ST */
+public void alg_LIGHT_ALG(){
+if( MODE.value == 0 ){
+	GREEN.value = false;
+	YELLOW.value = false;
+	RED.value = true;
+}
+
+if( MODE.value == 1 ){
+	GREEN.value = false;
+	YELLOW.value = true;
+	RED.value = false;
+}
+
+if( MODE.value == 2 ){
+	GREEN.value = true;
+	YELLOW.value = false;
+	RED.value = false;
+}
+}
+  /** ALGORITHM TIME_ALG IN ST */
+public void alg_TIME_ALG(){
+TIME_OUT.value = TIME_IN.value;
+}
+}

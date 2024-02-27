@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "https://www.holobloc.com/xml/LibraryElement.dtd" >
+<FBType Name="COLOR_DECIDER" Comment="Basic Function Block Type" >
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Holobloc Inc" Version="0.3" Author="JHC" Date="2009-09-15" Remarks="Changed transition priorities." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.2" Author="JHC" Date="2003-12-04" Remarks="Renamed for better indexing." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-11-05" Remarks="Corrected missing ST element in Algorithm REQ." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2000-05-30" />
+<CompilerInfo packageName="fb.rt.Conveyer" >
+  <Import declaration="fb.datatype.*" />
+  <Import declaration="fb.rt.*" />
+  <Import declaration="fb.rt.mva.VSTYLE" />
+</CompilerInfo>
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="BLUE_IN" >
+      </Event>
+      <Event Name="RED_IN" >
+      </Event>
+      <Event Name="YELLOW_IN" >
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="CNF" Comment="Execution Confirmation" >
+        <With Var="POS" />
+        <With Var="STYLE" />
+        <With Var="WKPC" />
+      </Event>
+    </EventOutputs>
+    <OutputVars>
+      <VarDeclaration Name="POS" Type="UINT" InitialValue="0" />
+      <VarDeclaration Name="STYLE" Type="VSTYLE" InitialValue="PALLET" />
+      <VarDeclaration Name="WKPC" Type="COLOR" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <ECC >
+      <ECState Name="START" Comment="Initial State" x="555.55554" y="427.77777" >
+      </ECState>
+      <ECState Name="BLUE_IN" x="400.0" y="1600.0" >
+        <ECAction Algorithm="BLUE_ALG" Output="CNF" />
+      </ECState>
+      <ECState Name="YELLOW_IN" x="1705.5555" y="1122.2222" >
+        <ECAction Algorithm="YELLOW_ALG" Output="CNF" />
+      </ECState>
+      <ECState Name="RED_IN" x="1622.2222" y="338.8889" >
+        <ECAction Algorithm="RED_ALG" Output="CNF" />
+      </ECState>
+      <ECTransition Source="START" Destination="RED_IN" Condition="RED_IN" x="1044.4445" y="227.77777" />
+      <ECTransition Source="RED_IN" Destination="START" Condition="1" x="1088.8888" y="383.3333" />
+      <ECTransition Source="START" Destination="YELLOW_IN" Condition="YELLOW_IN" x="1400.0" y="755.55554" />
+      <ECTransition Source="YELLOW_IN" Destination="START" Condition="1" x="1133.3333" y="911.1111" />
+      <ECTransition Source="START" Destination="BLUE_IN" Condition="BLUE_IN" x="555.55554" y="1116.6666" />
+      <ECTransition Source="BLUE_IN" Destination="START" Condition="1" x="311.11108" y="1111.1111" />
+    </ECC>
+  <Algorithm Name="RED_ALG" >
+<ST><![CDATA[POS := 0;
+STYLE := 'PALLET';
+WKPC := red;]]></ST>
+  </Algorithm>
+  <Algorithm Name="BLUE_ALG" >
+<ST><![CDATA[]]></ST>
+  </Algorithm>
+  <Algorithm Name="YELLOW_ALG" >
+<ST><![CDATA[]]></ST>
+  </Algorithm>
+  </BasicFB>
+</FBType>

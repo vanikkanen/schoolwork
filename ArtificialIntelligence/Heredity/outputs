@@ -1,0 +1,52 @@
+======================================================================
+FAIL: test_family0 (__main__.TestHeredity)
+Check that program prints correctly with family0.csv (6p)
+----------------------------------------------------------------------
+AssertionError: The screen printout with datafile family0.csv was incorrect.
+ Your output was:   'Harry:\n  Gene:\n    2: 0.3333\n    1: 0.3333\n    0: 0.3333\n  Trait:\n    True: 0.4067\n    False: 0.5933\nJames:\n  Gene:\n    2: 0.0002\n    1: 0.0013\n    0: 0.9985\n  Trait:\n    True: 1.0000\n    False: 0.0000\nLily:\n  Gene:\n    2: 0.0002\n    1: 0.0013\n    0: 0.9985\n  Trait:\n    True: 0.0000\n    False: 1.0000\n'
+ Correct output is: 'Harry:\n  Gene:\n    2: 0.0092\n    1: 0.4557\n    0: 0.5351\n  Trait:\n    True: 0.2665\n    False: 0.7335\nJames:\n  Gene:\n    2: 0.1976\n    1: 0.5106\n    0: 0.2918\n  Trait:\n    True: 1.0000\n    False: 0.0000\nLily:\n  Gene:\n    2: 0.0036\n    1: 0.0136\n    0: 0.9827\n  Trait:\n    True: 0.0000\n    False: 1.0000\n'
+
+======================================================================
+FAIL: test_family1 (__main__.TestHeredity)
+Check that program prints correctly with family1.csv (6p)
+----------------------------------------------------------------------
+AssertionError: The screen printout with datafile family1.csv was incorrect.
+ Your output was:   'Arthur:\n  Gene:\n    2: 0.0000\n    1: 0.0000\n    0: 1.0000\n  Trait:\n    True: 0.0000\n    False: 1.0000\nCharlie:\n  Gene:\n    2: 0.1966\n    1: 0.2472\n    0: 0.5562\n  Trait:\n    True: 0.0000\n    False: 1.0000\nFred:\n  Gene:\n    2: 0.5328\n    1: 0.4590\n    0: 0.0082\n  Trait:\n    True: 1.0000\n    False: 0.0000\nGinny:\n  Gene:\n    2: 0.3333\n    1: 0.3333\n    0: 0.3333\n  Trait:\n    True: 0.4067\n    False: 0.5933\nMolly:\n  Gene:\n    2: 0.0000\n    1: 0.0000\n    0: 1.0000\n  Trait:\n    True: 0.0000\n    False: 1.0000\nRon:\n  Gene:\n    2: 0.3333\n    1: 0.3333\n    0: 0.3333\n  Trait:\n    True: 0.4067\n    False: 0.5933\n'
+ Correct output is: 'Arthur:\n  Gene:\n    2: 0.0329\n    1: 0.1035\n    0: 0.8636\n  Trait:\n    True: 0.0000\n    False: 1.0000\nCharlie:\n  Gene:\n    2: 0.0018\n    1: 0.1331\n    0: 0.8651\n  Trait:\n    True: 0.0000\n    False: 1.0000\nFred:\n  Gene:\n    2: 0.0065\n    1: 0.6486\n    0: 0.3449\n  Trait:\n    True: 1.0000\n    False: 0.0000\nGinny:\n  Gene:\n    2: 0.0027\n    1: 0.1805\n    0: 0.8168\n  Trait:\n    True: 0.1110\n    False: 0.8890\nMolly:\n  Gene:\n    2: 0.0329\n    1: 0.1035\n    0: 0.8636\n  Trait:\n    True: 0.0000\n    False: 1.0000\nRon:\n  Gene:\n    2: 0.0027\n    1: 0.1805\n    0: 0.8168\n  Trait:\n    True: 0.1110\n    False: 0.8890\n'
+
+======================================================================
+FAIL: test_family2 (__main__.TestHeredity)
+Check that program prints correctly with family2.csv (6p)
+----------------------------------------------------------------------
+AssertionError: The screen printout with datafile family2.csv was incorrect.
+ Your output was:   'Laura:\n  Gene:\n    2: 0.3333\n    1: 0.3333\n    0: 0.3333\n  Trait:\n    True: 0.4067\n    False: 0.5933\nLeland:\n  Gene:\n    2: 0.0002\n    1: 0.0013\n    0: 0.9985\n  Trait:\n    True: 1.0000\n    False: 0.0000\nSarah:\n  Gene:\n    2: 0.0002\n    1: 0.0013\n    0: 0.9985\n  Trait:\n    True: 1.0000\n    False: 0.0000\n'
+ Correct output is: 'Laura:\n  Gene:\n    2: 0.2060\n    1: 0.4957\n    0: 0.2983\n  Trait:\n    True: 0.4145\n    False: 0.5855\nLeland:\n  Gene:\n    2: 0.1976\n    1: 0.5106\n    0: 0.2918\n  Trait:\n    True: 1.0000\n    False: 0.0000\nSarah:\n  Gene:\n    2: 0.1976\n    1: 0.5106\n    0: 0.2918\n  Trait:\n    True: 1.0000\n    False: 0.0000\n'
+
+======================================================================
+FAIL: test_family3 (__main__.TestHeredity)
+Check that program prints correctly with family3.csv (6p)
+----------------------------------------------------------------------
+AssertionError: The screen printout with datafile family3.csv was incorrect.
+ Your output was:   'Morty:\n  Gene:\n    2: 0.3333\n    1: 0.3333\n    0: 0.3333\n  Trait:\n    True: 0.4067\n    False: 0.5933\nJerry:\n  Gene:\n    2: 0.0000\n    1: 0.0001\n    0: 0.9999\n  Trait:\n    True: 1.0000\n    False: 0.0000\nBeth:\n  Gene:\n    2: 0.0000\n    1: 0.0001\n    0: 0.9999\n  Trait:\n    True: 1.0000\n    False: 0.0000\nSummer:\n  Gene:\n    2: 0.3333\n    1: 0.3333\n    0: 0.3333\n  Trait:\n    True: 0.4067\n    False: 0.5933\n'
+ Correct output is: 'Morty:\n  Gene:\n    2: 0.2060\n    1: 0.4957\n    0: 0.2983\n  Trait:\n    True: 0.4145\n    False: 0.5855\nJerry:\n  Gene:\n    2: 0.1976\n    1: 0.5106\n    0: 0.2918\n  Trait:\n    True: 1.0000\n    False: 0.0000\nBeth:\n  Gene:\n    2: 0.1976\n    1: 0.5106\n    0: 0.2918\n  Trait:\n    True: 1.0000\n    False: 0.0000\nSummer:\n  Gene:\n    2: 0.2060\n    1: 0.4957\n    0: 0.2983\n  Trait:\n    True: 0.4145\n    False: 0.5855\n'
+
+======================================================================
+FAIL: test_family4 (__main__.TestHeredity)
+Check that program prints correctly with family4.csv (6p)
+----------------------------------------------------------------------
+AssertionError: The screen printout with datafile family4.csv was incorrect.
+ Your output was:   'Frank:\n  Gene:\n    2: 0.0000\n    1: 0.0000\n    0: 1.0000\n  Trait:\n    True: 0.0000\n    False: 1.0000\nCharlie:\n  Gene:\n    2: 0.1966\n    1: 0.2472\n    0: 0.5562\n  Trait:\n    True: 0.0000\n    False: 1.0000\nDennis:\n  Gene:\n    2: 0.5328\n    1: 0.4590\n    0: 0.0082\n  Trait:\n    True: 1.0000\n    False: 0.0000\nMac:\n  Gene:\n    2: 0.3333\n    1: 0.3333\n    0: 0.3333\n  Trait:\n    True: 0.4067\n    False: 0.5933\nBarbra:\n  Gene:\n    2: 0.0000\n    1: 0.0000\n    0: 1.0000\n  Trait:\n    True: 1.0000\n    False: 0.0000\nDeandra:\n  Gene:\n    2: 0.3333\n    1: 0.3333\n    0: 0.3333\n  Trait:\n    True: 0.4067\n    False: 0.5933\n'
+ Correct output is: 'Frank:\n  Gene:\n    2: 0.0054\n    1: 0.0198\n    0: 0.9748\n  Trait:\n    True: 0.0000\n    False: 1.0000\nCharlie:\n  Gene:\n    2: 0.0095\n    1: 0.4985\n    0: 0.4919\n  Trait:\n    True: 0.0000\n    False: 1.0000\nDennis:\n  Gene:\n    2: 0.0194\n    1: 0.9523\n    0: 0.0283\n  Trait:\n    True: 1.0000\n    False: 0.0000\nMac:\n  Gene:\n    2: 0.0132\n    1: 0.6259\n    0: 0.3609\n  Trait:\n    True: 0.3627\n    False: 0.6373\nBarbra:\n  Gene:\n    2: 0.3031\n    1: 0.6536\n    0: 0.0433\n  Trait:\n    True: 1.0000\n    False: 0.0000\nDeandra:\n  Gene:\n    2: 0.0132\n    1: 0.6259\n    0: 0.3609\n  Trait:\n    True: 0.3627\n    False: 0.6373\n'
+
+======================================================================
+FAIL: test_family5 (__main__.TestHeredity)
+Check that program prints correctly with family5.csv (6p)
+----------------------------------------------------------------------
+AssertionError: The screen printout with datafile family5.csv was incorrect.
+ Your output was:   'Peter:\n  Gene:\n    2: 0.0000\n    1: 0.0000\n    0: 1.0000\n  Trait:\n    True: 1.0000\n    False: 0.0000\nBrian:\n  Gene:\n    2: 0.5328\n    1: 0.4590\n    0: 0.0082\n  Trait:\n    True: 1.0000\n    False: 0.0000\nMegan:\n  Gene:\n    2: 0.5328\n    1: 0.4590\n    0: 0.0082\n  Trait:\n    True: 1.0000\n    False: 0.0000\nChris:\n  Gene:\n    2: 0.3333\n    1: 0.3333\n    0: 0.3333\n  Trait:\n    True: 0.4067\n    False: 0.5933\nLouis:\n  Gene:\n    2: 0.0000\n    1: 0.0000\n    0: 1.0000\n  Trait:\n    True: 1.0000\n    False: 0.0000\nStewie:\n  Gene:\n    2: 0.3333\n    1: 0.3333\n    0: 0.3333\n  Trait:\n    True: 0.4067\n    False: 0.5933\n'
+ Correct output is: 'Peter:\n  Gene:\n    2: 0.3510\n    1: 0.4991\n    0: 0.1499\n  Trait:\n    True: 1.0000\n    False: 0.0000\nBrian:\n  Gene:\n    2: 0.3709\n    1: 0.6254\n    0: 0.0037\n  Trait:\n    True: 1.0000\n    False: 0.0000\nMegan:\n  Gene:\n    2: 0.3709\n    1: 0.6254\n    0: 0.0037\n  Trait:\n    True: 1.0000\n    False: 0.0000\nChris:\n  Gene:\n    2: 0.3257\n    1: 0.5456\n    0: 0.1286\n  Trait:\n    True: 0.5186\n    False: 0.4814\nLouis:\n  Gene:\n    2: 0.3510\n    1: 0.4991\n    0: 0.1499\n  Trait:\n    True: 1.0000\n    False: 0.0000\nStewie:\n  Gene:\n    2: 0.3257\n    1: 0.5456\n    0: 0.1286\n  Trait:\n    True: 0.5186\n    False: 0.4814\n'
+
+----------------------------------------------------------------------
+Ran 9 tests in 2.047s
+
+FAILED (failures=6)

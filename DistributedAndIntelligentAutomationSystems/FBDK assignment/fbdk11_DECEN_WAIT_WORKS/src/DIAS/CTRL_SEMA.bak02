@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "https://www.holobloc.com/xml/LibraryElement.dtd" >
+<FBType Name="CTRL_SEMA" Comment="Basic Function Block Type" >
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Holobloc Inc" Version="0.3" Author="JHC" Date="2009-09-15" Remarks="Changed transition priorities." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.2" Author="JHC" Date="2003-12-04" Remarks="Renamed for better indexing." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-11-05" Remarks="Corrected missing ST element in Algorithm REQ." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2000-05-30" />
+<CompilerInfo packageName="fb.rt.DIAS" >
+  <Import declaration="fb.datatype.*" />
+  <Import declaration="fb.rt.*" />
+</CompilerInfo>
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" Comment="Initialization Request" >
+      </Event>
+      <Event Name="GREEN_I" >
+      </Event>
+      <Event Name="YELLOW_I" >
+      </Event>
+      <Event Name="PREV_CTRL" >
+      </Event>
+      <Event Name="UPDATE_TIME" >
+        <With Var="GREEN_TIME" />
+        <With Var="YELLOW_TIME" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" Comment="Initialization Confirm" >
+      </Event>
+      <Event Name="GREEN_O" >
+        <With Var="MODE" />
+        <With Var="GREEN_TIME_OUT" />
+      </Event>
+      <Event Name="YELLOW_O" >
+        <With Var="MODE" />
+        <With Var="YELLOW_TIME_OUT" />
+      </Event>
+      <Event Name="NEXT_CTRL" >
+        <With Var="MODE" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="GREEN_TIME" Type="TIME" />
+      <VarDeclaration Name="YELLOW_TIME" Type="TIME" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="MODE" Type="INT" />
+      <VarDeclaration Name="GREEN_TIME_OUT" Type="TIME" />
+      <VarDeclaration Name="YELLOW_TIME_OUT" Type="TIME" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <ECC >
+      <ECState Name="START" Comment="Initial State" x="555.55554" y="427.77777" >
+      </ECState>
+      <ECState Name="INIT" Comment="Initialization" x="922.22217" y="138.88889" >
+        <ECAction Algorithm="INIT" Output="INITO" />
+      </ECState>
+      <ECState Name="GREEN_I" x="1111.1111" y="1405.5555" >
+        <ECAction Algorithm="YELLOW_LIGHT_ALG" Output="YELLOW_O" />
+      </ECState>
+      <ECState Name="YELLOW_I" x="1677.7777" y="905.55554" >
+        <ECAction Algorithm="RED_LIGHT_ALG" Output="NEXT_CTRL" />
+      </ECState>
+      <ECState Name="PREV_CTRL" x="188.88889" y="1672.2222" >
+        <ECAction Algorithm="GREEN_LIGHT_ALG" Output="GREEN_O" />
+      </ECState>
+      <ECState Name="UPDATE_TIME" x="1655.5555" y="1166.6666" >
+        <ECAction Algorithm="UPDATE_TIME_ALG" />
+      </ECState>
+      <ECTransition Source="INIT" Destination="START" Condition="1" x="555.55554" y="138.88889" />
+      <ECTransition Source="START" Destination="INIT" Condition="INIT" x="922.22217" y="427.77777" />
+      <ECTransition Source="START" Destination="PREV_CTRL" Condition="PREV_CTRL" x="538.88885" y="1300.0" />
+      <ECTransition Source="PREV_CTRL" Destination="START" Condition="1" x="188.88889" y="1277.7777" />
+      <ECTransition Source="START" Destination="GREEN_I" Condition="GREEN_I" x="755.55554" y="1172.2222" />
+      <ECTransition Source="GREEN_I" Destination="START" Condition="1" x="933.3333" y="1016.6666" />
+      <ECTransition Source="START" Destination="YELLOW_I" Condition="YELLOW_I" x="1127.7777" y="666.6666" />
+      <ECTransition Source="YELLOW_I" Destination="START" Condition="1" x="1238.8888" y="533.3333" />
+      <ECTransition Source="START" Destination="UPDATE_TIME" Condition="UPDATE_TIME" x="1044.4445" y="938.88885" />
+      <ECTransition Source="UPDATE_TIME" Destination="START" Condition="1" x="1105.5555" y="800.0" />
+    </ECC>
+  <Algorithm Name="INIT" Comment="Initialization algorithm" >
+<ST><![CDATA[MODE := 0;]]></ST>
+  </Algorithm>
+  <Algorithm Name="GREEN_LIGHT_ALG" >
+<ST><![CDATA[MODE := 2;]]></ST>
+  </Algorithm>
+  <Algorithm Name="YELLOW_LIGHT_ALG" >
+<ST><![CDATA[MODE := 1;]]></ST>
+  </Algorithm>
+  <Algorithm Name="RED_LIGHT_ALG" >
+<ST><![CDATA[MODE := 0;]]></ST>
+  </Algorithm>
+  <Algorithm Name="UPDATE_TIME_ALG" >
+<ST><![CDATA[GREEN_TIME_OUT := GREEN_TIME;
+YELLOW_TIME_OUT := YELLOW_TIME;]]></ST>
+  </Algorithm>
+  </BasicFB>
+</FBType>

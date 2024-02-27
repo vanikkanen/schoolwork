@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "https://www.holobloc.com/xml/LibraryElement.dtd" >
+<FBType Name="COLOR_POS_RED" Comment="Basic Function Block Type" >
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Holobloc Inc" Version="0.3" Author="JHC" Date="2009-09-15" Remarks="Changed transition priorities." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.2" Author="JHC" Date="2003-12-04" Remarks="Renamed for better indexing." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-11-05" Remarks="Corrected missing ST element in Algorithm REQ." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2000-05-30" />
+<CompilerInfo packageName="fb.rt.Conveyer" >
+  <Import declaration="fb.datatype.*" />
+  <Import declaration="fb.rt.*" />
+</CompilerInfo>
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="REQ" Comment="Normal Execution Request" >
+        <With Var="WKPC_COL" />
+        <With Var="WKPC_POS" />
+        <With Var="Check_col" />
+        <With Var="PUSH_POS" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="CNF" Comment="Execution Confirmation" >
+        <With Var="QO" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="WKPC_COL" Type="COLOR" />
+      <VarDeclaration Name="WKPC_POS" Type="UINT" />
+      <VarDeclaration Name="Check_col" Type="COLOR" />
+      <VarDeclaration Name="PUSH_POS" Type="UINT" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <ECC >
+      <ECState Name="START" Comment="Initial State" x="555.55554" y="427.77777" >
+      </ECState>
+      <ECState Name="CHECK_VALS" Comment="Normal execution" x="716.6666" y="1105.5555" >
+        <ECAction Algorithm="REQ" Output="CNF" />
+      </ECState>
+      <ECTransition Source="START" Destination="CHECK_VALS" Condition="REQ" x="861.1111" y="661.1111" />
+      <ECTransition Source="CHECK_VALS" Destination="START" Condition="1" x="361.11108" y="733.3333" />
+    </ECC>
+  <Algorithm Name="REQ" Comment="Normally executed algorithm" >
+<ST><![CDATA[IF  (WKPC_POS>=PUSH_POS) AND (WKPC_COL=Check_col) THEN
+	QO := TRUE;
+ELSE
+	QO := FALSE;
+END_IF;]]></ST>
+  </Algorithm>
+  </BasicFB>
+</FBType>

@@ -1,0 +1,70 @@
+  > # Test removing a station                  | > # Test removing a station
+  > clear_all                                  | > clear_all
+  Cleared all stations                         | Cleared all stations
+  > station_count                              | > station_count
+  Number of stations: 0                        | Number of stations: 0
+  > # Remove non-existing                      | > # Remove non-existing
+  > remove_station 33                          | > remove_station 33
+  Failed (NO_STATION returned)!                | Failed (NO_STATION returned)!
+  > # Add stations, regions and containment    | > # Add stations, regions and containment
+  > add_station xx "Notown" (100,0)            | > add_station xx "Notown" (100,0)
+  Station:                                     | Station:
+     Notown: pos=(100,0), id=xx                |    Notown: pos=(100,0), id=xx
+  > add_station 123456 "Sector7" (0,0)         | > add_station 123456 "Sector7" (0,0)
+  Station:                                     | Station:
+     Sector7: pos=(0,0), id=123456             |    Sector7: pos=(0,0), id=123456
+> add_station 654321 "Segment2" (6,6)
+Station:
+Segment2: pos=(6,6), id=654321
+> station_count
+ Number of stations: 3
+> add_region 321 "Area9" (3,3) (3,4) (4,5)
+Region:
+  Area9: id=321
+> add_region 123 "Region6" (2,2) (1,1) (1,2)
+Region:
+  Region6: id=123
+> all_regions
+Regions:
+  1. Region6: id=123
+  2. Area9: id=321
+> add_station_to_region 123456 321
+Added 'Sector7' to region 'Area9'
+Station:
+   Sector7: pos=(0,0), id=123456
+  Region:                                      | Region:
+     Area9: id=321                             |    Area9: id=321
+  > add_station_to_region 654321 123           | > add_station_to_region 654321 123
+  Added 'Segment2' to region 'Region6'         | Added 'Segment2' to region 'Region6'
+  Station:                                     | Station:
+     Segment2: pos=(6,6), id=654321            |    Segment2: pos=(6,6), id=654321
+  Region:                                      | Region:
+     Region6: id=123                           |    Region6: id=123
+  > # Remove station                           | > # Remove station
+  > stations_alphabetically                    | > stations_alphabetically
+  Stations:                                    | Stations:
+  1. Notown: pos=(100,0), id=xx                | 1. Notown: pos=(100,0), id=xx
+  2. Sector7: pos=(0,0), id=123456             | 2. Sector7: pos=(0,0), id=123456
+  3. Segment2: pos=(6,6), id=654321            | 3. Segment2: pos=(6,6), id=654321
+  > remove_station xx                          | > remove_station xx
+? Failed (NO_STATION returned)!                | Notown removed.
+  > stations_alphabetically                    | > stations_alphabetically
+  Stations:                                    | Stations:
+  1. Sector7: pos=(0,0), id=123456             | 1. Sector7: pos=(0,0), id=123456
+  2. Segment2: pos=(6,6), id=654321            | 2. Segment2: pos=(6,6), id=654321
+  > # Test region containment                  | > # Test region containment
+  > station_in_regions xx                      | > station_in_regions xx
+  Station:                                     | Station:
+     !NO_NAME!: pos=(--NO_COORD--), id=xx      |    !NO_NAME!: pos=(--NO_COORD--), id=xx
+  Failed (NO_REGION returned)!                 | Failed (NO_REGION returned)!
+  > # Remove another                           | > # Remove another
+  > stations_distance_increasing               | > stations_distance_increasing
+  Stations:                                    | Stations:
+  1. Sector7: pos=(0,0), id=123456             | 1. Sector7: pos=(0,0), id=123456
+  2. Segment2: pos=(6,6), id=654321            | 2. Segment2: pos=(6,6), id=654321
+  > remove_station 654321                      | > remove_station 654321
+  Segment2 removed.                            | Segment2 removed.
+  > stations_distance_increasing               | > stations_distance_increasing
+  Station:                                     | Station:
+     Sector7: pos=(0,0), id=123456             |    Sector7: pos=(0,0), id=123456
+  >                                            | > 

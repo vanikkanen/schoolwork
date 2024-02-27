@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "https://www.holobloc.com/xml/LibraryElement.dtd" >
+<FBType Name="CNV_CTRL" Comment="Basic Function Block Type" >
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Holobloc Inc" Version="0.3" Author="JHC" Date="2009-09-15" Remarks="Changed transition priorities." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.2" Author="JHC" Date="2003-12-04" Remarks="Renamed for better indexing." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-11-05" Remarks="Corrected missing ST element in Algorithm REQ." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2000-05-30" />
+<CompilerInfo packageName="fb.rt.Conveyer" >
+  <Import declaration="fb.datatype.*" />
+  <Import declaration="fb.rt.*" />
+</CompilerInfo>
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" Comment="Initialization Request" >
+      </Event>
+      <Event Name="REQ" Comment="Normal Execution Request" >
+      </Event>
+      <Event Name="LOAD" >
+      </Event>
+      <Event Name="UNLOAD" >
+      </Event>
+      <Event Name="START_MOTOR" >
+      </Event>
+      <Event Name="TURN_OFF_MOTOR" >
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" Comment="Initialization Confirm" >
+      </Event>
+      <Event Name="CNF" Comment="Execution Confirmation" >
+        <With Var="MOTOR_OUT" />
+      </Event>
+      <Event Name="UNLOAD_OUT" >
+      </Event>
+      <Event Name="LOAD_OUT" >
+        <With Var="MOTOR_OUT" />
+      </Event>
+    </EventOutputs>
+    <OutputVars>
+      <VarDeclaration Name="MOTOR_OUT" Type="BOOL" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <ECC >
+      <ECState Name="START" Comment="Initial State" x="3311.111" y="2038.8888" >
+      </ECState>
+      <ECState Name="INIT" Comment="Initialization" x="3966.6665" y="1316.6666" >
+        <ECAction Algorithm="INIT" Output="INITO" />
+      </ECState>
+      <ECState Name="REQ" Comment="Normal execution" x="2488.8887" y="2727.7776" >
+        <ECAction Algorithm="REQ" Output="CNF" />
+      </ECState>
+      <ECState Name="UNLOAD" x="5572.222" y="2550.0" >
+        <ECAction Output="UNLOAD_OUT" />
+      </ECState>
+      <ECState Name="LOAD" x="4288.8887" y="3399.9998" >
+        <ECAction Output="LOAD_OUT" />
+      </ECState>
+      <ECState Name="START_MOTOR" x="1388.8888" y="1622.2222" >
+        <ECAction Algorithm="START_MOTOR_ALG" Output="CNF" />
+      </ECState>
+      <ECState Name="TURN_OFF_MOTOR" x="2544.4443" y="1222.2222" >
+        <ECAction Algorithm="TURN_OFF_MOTOR" Output="CNF" />
+      </ECState>
+      <ECTransition Source="START" Destination="REQ" Condition="REQ" x="2750.0" y="2411.111" />
+      <ECTransition Source="START" Destination="INIT" Condition="INIT" x="3761.111" y="1749.9999" />
+      <ECTransition Source="REQ" Destination="START" Condition="1" x="2955.5554" y="2555.5554" />
+      <ECTransition Source="START" Destination="UNLOAD" Condition="UNLOAD" x="4894.4443" y="2155.5554" />
+      <ECTransition Source="UNLOAD" Destination="START" Condition="1" x="4833.333" y="2461.111" />
+      <ECTransition Source="START" Destination="LOAD" Condition="LOAD" x="3872.2222" y="3027.7776" />
+      <ECTransition Source="LOAD" Destination="START" Condition="1" x="4150.0" y="2961.111" />
+      <ECTransition Source="START" Destination="START_MOTOR" Condition="START_MOTOR" x="1933.3333" y="2011.1111" />
+      <ECTransition Source="START_MOTOR" Destination="START" Condition="1" x="2116.6665" y="1816.6666" />
+      <ECTransition Source="TURN_OFF_MOTOR" Destination="START" Condition="1" x="2661.111" y="1633.3333" />
+      <ECTransition Source="START" Destination="TURN_OFF_MOTOR" Condition="TURN_OFF_MOTOR" x="3072.2222" y="1633.3333" />
+      <ECTransition Source="INIT" Destination="START_MOTOR" Condition="1" x="2738.8887" y="411.11108" />
+    </ECC>
+  <Algorithm Name="INIT" Comment="Initialization algorithm" >
+<ST><![CDATA[MOTOR_OUT := TRUE;]]></ST>
+  </Algorithm>
+  <Algorithm Name="REQ" Comment="Normally executed algorithm" >
+<ST><![CDATA[]]></ST>
+  </Algorithm>
+  <Algorithm Name="START_MOTOR_ALG" >
+<ST><![CDATA[MOTOR_OUT := TRUE;]]></ST>
+  </Algorithm>
+  <Algorithm Name="TURN_OFF_MOTOR" >
+<ST><![CDATA[MOTOR_OUT := FALSE;]]></ST>
+  </Algorithm>
+  </BasicFB>
+</FBType>

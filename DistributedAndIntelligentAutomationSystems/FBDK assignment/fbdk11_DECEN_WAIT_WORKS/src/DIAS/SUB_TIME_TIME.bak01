@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "https://www.holobloc.com/xml/LibraryElement.dtd" >
+<FBType Name="SUB_TIME_TIME" Comment="a simple FB Function Block Type" >
+  <Identification Standard="61499-1" Type="Simple FB" Description="Template for a Simple FB" />
+  <VersionInfo Organization="Holobloc Inc" Version="0.2" Author="JHC" Date="2020-05-24" Remarks="Added ECC documentation." />
+  <VersionInfo Organization="Holobloc Inc" Version="0.1" Author="JHC" Date="2020-05-19" Remarks="Changed name from SimpleFB back to Simple." />
+  <VersionInfo Organization="Holobloc Inc" Version="0.0" Author="JHC" Date="2020-05-05" />
+<CompilerInfo packageName="fb.rt.DIAS" >
+  <Compiler Language="Java" Vendor="AdoptOpenJDK" Product="JDK" Version="1.8.0_222" />
+  <Import declaration="fb.datatype.*" />
+  <Import declaration="fb.rt.*" />
+</CompilerInfo>
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="REQ" Comment="Service Request" >
+        <With Var="IN_1" />
+        <With Var="IN_2" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="CNF" Comment="Confirmation of Requested Service" >
+        <With Var="OUT" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="IN_1" Type="TIME" Comment="Input Variable" />
+      <VarDeclaration Name="IN_2" Type="TIME" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="OUT" Type="TIME" Comment="Output variable" />
+    </OutputVars>
+  </InterfaceList>
+  <SimpleFB>
+    <ECState Name="REQ" Comment="Services REQ event" x="144.44444" y="172.22221" >
+      <ECAction Algorithm="REQ" Output="CNF" />
+    </ECState>
+  <Algorithm Name="REQ" Comment="Normally Executed Algorithm" >
+<ST><![CDATA[OUT := IN_1 - IN_2;]]></ST>
+  </Algorithm>
+  </SimpleFB>
+</FBType>

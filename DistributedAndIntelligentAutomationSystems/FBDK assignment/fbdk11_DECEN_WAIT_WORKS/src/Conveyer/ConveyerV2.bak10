@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE System SYSTEM "https://www.holobloc.com/xml/LibraryElement.dtd" >
+<System Name="ConveyerV2" Comment="System Configuration" >
+  <Identification Standard="61499-1" />
+  <VersionInfo Organization="Holobloc Inc." Version="0.4" Author="JHC" Date="2009-03-05" Remarks="Deleted Application." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.3" Author="JHC" Date="2003-12-05" Remarks="Renamed from NEWSYSTEM." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.2" Author="JHC" Date="2002-11-05" Remarks="Fixed missing (empty) FBD in Application." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-01-17" Remarks="Minor cleanup" />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2000-05-27" />
+<CompilerInfo packageName="fb.rt.Conveyer" >
+  <Import declaration="fb.datatype.*" />
+  <Import declaration="fb.rt.*" />
+  <Import declaration="fb.rt.hmi.FRAME_DEVICE" />
+  <Import declaration="java.awt.*" />
+</CompilerInfo>
+  <Device Name="HMI" Type="FRAME_DEVICE" x="483.3333" y="483.3333" >
+    <Parameter Name="BOUNDS" Value="[0,0,200,300]" />
+    <Parameter Name="GRID" Value="[4,1]" />
+    <Resource Name="HMI_CNV1" Type="PANEL_RESOURCE" x="294.44443" y="311.11108" >
+      <FBNetwork >
+        <FB Name="CNV1_M" Type="IN_BOOL" x="505.55554" y="283.3333" >
+          <Parameter Name="QI" Value="1" />
+          <Parameter Name="LABEL" Value="&#34;Motor 1&#34;" />
+        </FB>
+        <FB Name="CNV1_LOAD" Type="IN_EVENT" x="1688.8888" y="538.88885" >
+          <Parameter Name="QI" Value="1" />
+          <Parameter Name="LABEL" Value="&#34;Workpiece in&#34;" />
+        </FB>
+        <FB Name="CNV1_M_VAL" Type="PUBL_1" x="1100.0" y="1638.8888" >
+        </FB>
+        <FB Name="CNV1_LOAD_VAL" Type="PUBL_0" x="1600.0" y="1961.1111" >
+        </FB>
+        <EventConnections>
+          <Connection Source="START.COLD" Destination="CNV1_M.INIT" dx1="55.555553" />
+          <Connection Source="CNV1_M.INITO" Destination="CNV1_LOAD.INIT" dx1="316.66666" />
+          <Connection Source="CNV1_LOAD.INITO" Destination="CNV1_M_VAL.INIT" dx1="100.0" dx2="88.888885" dy="750.0" />
+          <Connection Source="CNV1_M.IND" Destination="CNV1_M_VAL.REQ" dx1="116.666664" dx2="55.555553" dy="2350.0" />
+          <Connection Source="CNV1_M_VAL.INITO" Destination="CNV1_LOAD_VAL.INIT" dx1="144.44444" dx2="150.0" dy="83.33333" />
+          <Connection Source="CNV1_LOAD.IND" Destination="CNV1_LOAD_VAL.REQ" dx1="216.66666" dx2="55.555553" dy="1905.5555" />
+        </EventConnections>
+        <DataConnections>
+          <Connection Source="CNV1_M.OUT" Destination="CNV1_M_VAL.SD_1" dx1="44.444443" dx2="55.555553" dy="2350.0" />
+        </DataConnections>
+      </FBNetwork>
+    </Resource>
+    <Resource Name="HMI_CNV2" Type="PANEL_RESOURCE" x="283.3333" y="1061.1111" >
+      <FBNetwork >
+        <FB Name="CNV2_M" Type="IN_BOOL" x="622.22217" y="788.88885" >
+          <Parameter Name="QI" Value="1" />
+          <Parameter Name="LABEL" Value="&#34;Motor 2&#34;" />
+        </FB>
+        <FB Name="CNV2_M_VAL" Type="PUBL_1" x="1433.3333" y="1966.6666" >
+        </FB>
+        <EventConnections>
+          <Connection Source="START.COLD" Destination="CNV2_M.INIT" dx1="55.555553" />
+          <Connection Source="CNV2_M.IND" Destination="CNV2_M_VAL.REQ" dx1="227.77777" />
+          <Connection Source="CNV2_M.INITO" Destination="CNV2_M_VAL.INIT" dx1="344.44443" />
+        </EventConnections>
+        <DataConnections>
+          <Connection Source="CNV2_M.OUT" Destination="CNV2_M_VAL.SD_1" dx1="55.555553" />
+        </DataConnections>
+      </FBNetwork>
+    </Resource>
+    <Resource Name="HMI_TurnTable" Type="PANEL_RESOURCE" x="1372.2222" y="1522.2222" >
+      <FBNetwork >
+        <FB Name="TurnTable_M" Type="IN_BOOL" x="622.22217" y="788.88885" >
+          <Parameter Name="QI" Value="1" />
+          <Parameter Name="LABEL" Value="&#34;Motor TurnTable&#34;" />
+        </FB>
+        <FB Name="TurnTable_LOAD" Type="IN_EVENT" x="1799.9999" y="872.22217" >
+          <Parameter Name="QI" Value="1" />
+          <Parameter Name="LABEL" Value="&#34;Workpiece in&#34;" />
+        </FB>
+        <FB Name="TurnTable_M_VAL" Type="PUBL_1" x="1438.8888" y="1966.6666" >
+        </FB>
+        <FB Name="TurnTable_LOAD_VAL" Type="PUBL_0" x="2522.2222" y="2255.5554" >
+        </FB>
+        <EventConnections>
+          <Connection Source="START.COLD" Destination="TurnTable_M.INIT" dx1="55.555553" />
+          <Connection Source="TurnTable_M.INITO" Destination="TurnTable_LOAD.INIT" dx1="55.555553" />
+          <Connection Source="TurnTable_M.IND" Destination="TurnTable_M_VAL.REQ" dx1="227.77777" />
+          <Connection Source="TurnTable_LOAD.INITO" Destination="TurnTable_M_VAL.INIT" dx1="55.555553" dx2="138.88889" dy="849.99994" />
+          <Connection Source="TurnTable_M_VAL.INITO" Destination="TurnTable_LOAD_VAL.INIT" dx1="55.555553" />
+          <Connection Source="TurnTable_LOAD.IND" Destination="TurnTable_LOAD_VAL.REQ" dx1="150.0" />
+        </EventConnections>
+        <DataConnections>
+          <Connection Source="TurnTable_M.OUT" Destination="TurnTable_M_VAL.SD_1" dx1="55.555553" />
+        </DataConnections>
+      </FBNetwork>
+    </Resource>
+  </Device>
+  <Device Name="Control" Type="FRAME_DEVICE" x="1749.9999" y="1377.7777" >
+    <Resource Name="CNV1_CTRL" Type="PANEL_RESOURCE" x="361.11108" y="827.7778" >
+    </Resource>
+    <Resource Name="CNV2_CTRL" Type="PANEL_RESOURCE" x="388.8889" y="1822.2222" >
+    </Resource>
+    <Resource Name="TurnTable_CTRL" Type="PANEL_RESOURCE" x="494.44443" y="2650.0" >
+      <FBNetwork >
+        <FB Name="TT_CTRL_2_MODEL" Type="PUBL_2" x="2455.5554" y="150.0" >
+          <Parameter Name="ID" Value="TURNTABLE_CTRL" />
+        </FB>
+        <FB Name="TT_CTRL" Type="TT_TEST" x="1038.8888" y="61.111107" >
+        </FB>
+        <EventConnections>
+          <Connection Source="START.COLD" Destination="TT_CTRL.INIT" dx1="55.555553" />
+          <Connection Source="TT_CTRL.INITO" Destination="TT_CTRL_2_MODEL.INIT" dx1="55.555553" />
+          <Connection Source="TT_CTRL.CNF" Destination="TT_CTRL_2_MODEL.REQ" dx1="55.555553" />
+        </EventConnections>
+        <DataConnections>
+          <Connection Source="TT_CTRL.POS_1" Destination="TT_CTRL_2_MODEL.SD_1" dx1="55.555553" />
+          <Connection Source="TT_CTRL.FULL" Destination="TT_CTRL_2_MODEL.SD_2" dx1="55.555553" />
+        </DataConnections>
+      </FBNetwork>
+    </Resource>
+  </Device>
+  <Device Name="MODEL" Type="FRAME_DEVICE" x="583.3333" y="1172.2222" >
+    <Resource Name="CNV1_MODEL" Type="PANEL_RESOURCE" x="361.11108" y="827.7778" >
+      <FBNetwork >
+        <FB Name="CNV1_MODEL" Type="CNV_MDL" x="2711.111" y="183.33333" >
+          <Parameter Name="WKPC" Value="[0,0,0]" />
+          <Parameter Name="STYLE" Value="PALLET" />
+          <Parameter Name="LPOS" Value="0" />
+          <Parameter Name="VF" Value="10" />
+        </FB>
+        <FB Name="CLK_PACE" Type="SUBL_0" x="100.0" y="827.7778" >
+        </FB>
+        <FB Name="CNV1_M_VAL" Type="SUBL_1" x="616.6666" y="1516.6666" >
+        </FB>
+        <FB Name="CNV1_LOAD_VAL" Type="SUBL_0" x="1138.8888" y="2155.5554" >
+        </FB>
+        <FB Name="CNV1_VIEW_VAL" Type="PUBL_3" x="3549.9998" y="2038.8888" >
+        </FB>
+        <FB Name="CNV1_2_MERGE" Type="CNV_MERGE_MDL" x="550.0" y="3477.7776" >
+        </FB>
+        <FB Name="split" Type="E_SPLIT" x="1277.7777" y="3227.7776" >
+        </FB>
+        <FB Name="TT_LOAD_VAL" Type="PUBL_0" x="4111.111" y="3433.3333" >
+        </FB>
+        <FB Name="CNV2_M_VAL" Type="SUBL_1" x="1338.8888" y="4600.0" >
+        </FB>
+        <FB Name="or" Type="FB_OR" x="61.111107" y="2255.5554" >
+        </FB>
+        <FB Name="split_pace" Type="E_SPLIT" x="872.22217" y="205.55554" >
+        </FB>
+        <EventConnections>
+          <Connection Source="START.COLD" Destination="CLK_PACE.INIT" dx1="55.555553" dx2="55.555553" dy="600.0" />
+          <Connection Source="CLK_PACE.INITO" Destination="CNV1_M_VAL.INIT" dx1="133.33333" dx2="55.555553" dy="1527.7777" />
+          <Connection Source="CNV1_M_VAL.INITO" Destination="CNV1_LOAD_VAL.INIT" dx1="55.555553" dx2="55.555553" dy="783.3333" />
+          <Connection Source="CNV1_LOAD_VAL.IND" Destination="CNV1_MODEL.LOAD" dx1="633.3333" />
+          <Connection Source="CNV1_LOAD_VAL.INITO" Destination="CNV1_VIEW_VAL.INIT" dx1="488.88885" />
+          <Connection Source="CNV1_MODEL.INDR" Destination="CNV1_VIEW_VAL.REQ" dx1="88.888885" dx2="55.555553" dy="1799.9999" />
+          <Connection Source="CNV1_2_MERGE.CNF" Destination="split.EI" dx1="55.555553" dx2="55.555553" dy="100.0" />
+          <Connection Source="split.EO1" Destination="CNV1_MODEL.UNLD" dx1="55.555553" dx2="55.555553" dy="83.33333" />
+          <Connection Source="split.EO2" Destination="TT_LOAD_VAL.REQ" dx1="55.555553" />
+          <Connection Source="CNV1_VIEW_VAL.INITO" Destination="TT_LOAD_VAL.INIT" dx1="55.555553" dx2="55.555553" dy="1594.4443" />
+          <Connection Source="TT_LOAD_VAL.INITO" Destination="CNV2_M_VAL.INIT" dx1="55.555553" dx2="55.555553" dy="750.0" />
+          <Connection Source="CNV1_M_VAL.IND" Destination="or.REQ" dx1="55.555553" dx2="55.555553" dy="800.0" />
+          <Connection Source="CLK_PACE.IND" Destination="split_pace.EI" dx1="55.555553" />
+          <Connection Source="split_pace.EO1" Destination="CNV1_MODEL.CLK" dx1="55.555553" dx2="55.555553" dy="83.33333" />
+          <Connection Source="split_pace.EO2" Destination="CNV1_2_MERGE.REQ" dx1="55.555553" dx2="55.555553" dy="83.33333" />
+        </EventConnections>
+        <DataConnections>
+          <Connection Source="CNV1_MODEL.POS" Destination="CNV1_VIEW_VAL.SD_1" dx1="283.3333" dx2="55.555553" dy="1577.7777" />
+          <Connection Source="CNV1_MODEL.STYLO" Destination="CNV1_VIEW_VAL.SD_2" dx1="205.55554" dx2="55.555553" dy="1577.7777" />
+          <Connection Source="CNV1_MODEL.WKPO" Destination="CNV1_VIEW_VAL.SD_3" dx1="150.0" dx2="55.555553" dy="1577.7777" />
+          <Connection Source="CNV1_MODEL.END" Destination="CNV1_2_MERGE.IN_CNV_END" dx1="1672.2222" dx2="55.555553" dy="3499.9998" />
+          <Connection Source="CNV2_M_VAL.RD_1" Destination="CNV1_2_MERGE.IN_CNV_OUT" dx1="55.555553" dx2="244.44443" dy="238.88889" />
+          <Connection Source="CNV1_M_VAL.RD_1" Destination="or.IN1" dx1="55.555553" dx2="55.555553" dy="1022.22217" />
+          <Connection Source="or.OUT" Destination="CNV1_MODEL.MTR_ON" dx1="211.1111" />
+          <Connection Source="or.OUT" Destination="CNV1_2_MERGE.IN_CNV_M" dx1="50.0" dx2="55.555553" dy="1222.2222" />
+        </DataConnections>
+      </FBNetwork>
+    </Resource>
+    <Resource Name="CNV2_MODEL" Type="PANEL_RESOURCE" x="433.3333" y="1588.8888" >
+      <FBNetwork >
+        <FB Name="CNV2_MODEL" Type="CNV_MDL" x="3061.111" y="205.55554" >
+          <Parameter Name="WKPC" Value="[0,0,0]" />
+          <Parameter Name="STYLE" Value="PALLET" />
+          <Parameter Name="LPOS" Value="0" />
+          <Parameter Name="VF" Value="10" />
+        </FB>
+        <FB Name="CLK_PACE" Type="SUBL_0" x="100.0" y="827.7778" >
+        </FB>
+        <FB Name="CNV2_M_VAL" Type="SUBL_1" x="616.6666" y="1511.1111" >
+        </FB>
+        <FB Name="CNV2_LOAD_VAL" Type="SUBL_0" x="1272.2222" y="2150.0" >
+        </FB>
+        <FB Name="CNV2_VIEW_VAL" Type="PUBL_3" x="4116.6665" y="2066.6665" >
+        </FB>
+        <FB Name="CNV2_1_MERGE" Type="CNV_MERGE_MDL" x="550.0" y="3477.7776" >
+        </FB>
+        <FB Name="split" Type="E_SPLIT" x="1277.7777" y="3227.7776" >
+        </FB>
+        <FB Name="CNV1_LOAD_VAL" Type="PUBL_0" x="4650.0" y="3577.7776" >
+        </FB>
+        <FB Name="CNV1_M_VAL" Type="SUBL_1" x="1333.3333" y="4600.0" >
+        </FB>
+        <FB Name="or" Type="FB_OR" x="61.111107" y="2255.5554" >
+        </FB>
+        <FB Name="split_pace" Type="E_SPLIT" x="872.22217" y="205.55554" >
+        </FB>
+        <EventConnections>
+          <Connection Source="START.COLD" Destination="CLK_PACE.INIT" dx1="55.555553" dx2="55.555553" dy="600.0" />
+          <Connection Source="CLK_PACE.INITO" Destination="CNV2_M_VAL.INIT" dx1="133.33333" dx2="55.555553" dy="1527.7777" />
+          <Connection Source="CNV2_M_VAL.INITO" Destination="CNV2_LOAD_VAL.INIT" dx1="211.1111" dx2="55.555553" dy="783.3333" />
+          <Connection Source="CNV2_LOAD_VAL.IND" Destination="CNV2_MODEL.LOAD" dx1="144.44444" />
+          <Connection Source="CNV2_LOAD_VAL.INITO" Destination="CNV2_VIEW_VAL.INIT" dx1="488.88885" />
+          <Connection Source="CNV2_MODEL.INDR" Destination="CNV2_VIEW_VAL.REQ" dx1="88.888885" dx2="55.555553" dy="1799.9999" />
+          <Connection Source="CNV2_1_MERGE.CNF" Destination="split.EI" dx1="55.555553" dx2="55.555553" dy="100.0" />
+          <Connection Source="split.EO1" Destination="CNV2_MODEL.UNLD" dx1="100.0" dx2="55.555553" dy="83.33333" />
+          <Connection Source="split.EO2" Destination="CNV1_LOAD_VAL.REQ" dx1="55.555553" />
+          <Connection Source="CNV2_VIEW_VAL.INITO" Destination="CNV1_LOAD_VAL.INIT" dx1="55.555553" />
+          <Connection Source="CNV1_LOAD_VAL.INITO" Destination="CNV1_M_VAL.INIT" dx1="55.555553" dx2="55.555553" dy="750.0" />
+          <Connection Source="CNV2_M_VAL.IND" Destination="or.REQ" dx1="55.555553" dx2="55.555553" dy="800.0" />
+          <Connection Source="CLK_PACE.IND" Destination="split_pace.EI" dx1="55.555553" />
+          <Connection Source="split_pace.EO1" Destination="CNV2_MODEL.CLK" dx1="55.555553" dx2="55.555553" dy="83.33333" />
+          <Connection Source="split_pace.EO2" Destination="CNV2_1_MERGE.REQ" dx1="55.555553" dx2="55.555553" dy="83.33333" />
+        </EventConnections>
+        <DataConnections>
+          <Connection Source="CNV2_MODEL.POS" Destination="CNV2_VIEW_VAL.SD_1" dx1="283.3333" dx2="55.555553" dy="1577.7777" />
+          <Connection Source="CNV2_MODEL.STYLO" Destination="CNV2_VIEW_VAL.SD_2" dx1="205.55554" dx2="55.555553" dy="1577.7777" />
+          <Connection Source="CNV2_MODEL.WKPO" Destination="CNV2_VIEW_VAL.SD_3" dx1="150.0" dx2="55.555553" dy="1577.7777" />
+          <Connection Source="CNV2_MODEL.END" Destination="CNV2_1_MERGE.IN_CNV_END" dx1="2116.6665" dx2="55.555553" dy="3499.9998" />
+          <Connection Source="CNV1_M_VAL.RD_1" Destination="CNV2_1_MERGE.IN_CNV_OUT" dx1="55.555553" dx2="244.44443" dy="238.88889" />
+          <Connection Source="CNV2_M_VAL.RD_1" Destination="or.IN1" dx1="133.33333" dx2="55.555553" dy="1022.22217" />
+          <Connection Source="or.OUT" Destination="CNV2_MODEL.MTR_ON" dx1="211.1111" />
+          <Connection Source="or.OUT" Destination="CNV2_1_MERGE.IN_CNV_M" dx1="50.0" dx2="55.555553" dy="1222.2222" />
+        </DataConnections>
+      </FBNetwork>
+    </Resource>
+    <Resource Name="CLK_MODEL" Type="PANEL_RESOURCE" x="1616.6666" y="1333.3333" >
+      <FBNetwork >
+        <FB Name="CLK_MODEL" Type="E_CYCLE" x="955.55554" y="444.44443" >
+          <Parameter Name="DT" Value="t#200ms" />
+        </FB>
+        <FB Name="CLK_PACE" Type="PUBL_0" x="1894.4443" y="555.55554" >
+        </FB>
+        <FB Name="split" Type="E_SPLIT" x="544.4444" y="83.33333" >
+        </FB>
+        <EventConnections>
+          <Connection Source="START.STOP" Destination="CLK_MODEL.STOP" dx1="55.555553" />
+          <Connection Source="START.COLD" Destination="split.EI" dx1="55.555553" />
+          <Connection Source="split.EO2" Destination="CLK_MODEL.START" dx1="72.22222" />
+          <Connection Source="split.EO1" Destination="CLK_PACE.INIT" dx1="694.4444" />
+          <Connection Source="CLK_MODEL.EO" Destination="CLK_PACE.REQ" dx1="161.1111" />
+        </EventConnections>
+      </FBNetwork>
+    </Resource>
+    <Resource Name="TurnTable_MODEL" Type="PANEL_RESOURCE" x="411.11108" y="2333.3333" >
+      <FBNetwork >
+        <FB Name="TT_VIEW_VAL" Type="PUBL_2" x="3277.7776" y="527.7778" >
+        </FB>
+        <FB Name="MODEL" Type="TURNTABLE_MODEL" x="1905.5555" y="572.2222" >
+        </FB>
+        <FB Name="TT_CTRL_2_MODEL" Type="SUBL_2" x="722.22217" y="566.6666" >
+          <Parameter Name="ID" Value="TURNTALBE_CTRL" />
+        </FB>
+        <FB Name="TT_LOAD_VAL" Type="SUBL_0" x="794.4444" y="1511.1111" >
+        </FB>
+        <EventConnections>
+          <Connection Source="MODEL.INITO" Destination="TT_VIEW_VAL.INIT" dx1="55.555553" />
+          <Connection Source="MODEL.CNF" Destination="TT_VIEW_VAL.REQ" dx1="55.555553" />
+          <Connection Source="START.COLD" Destination="TT_CTRL_2_MODEL.INIT" dx1="55.555553" />
+          <Connection Source="TT_CTRL_2_MODEL.IND" Destination="MODEL.REQ" dx1="55.555553" />
+          <Connection Source="START.COLD" Destination="TT_LOAD_VAL.INIT" dx1="55.555553" />
+          <Connection Source="TT_LOAD_VAL.IND" Destination="MODEL.REQ" dx1="433.3333" />
+          <Connection Source="TT_CTRL_2_MODEL.INITO" Destination="MODEL.INIT" dx1="55.555553" />
+        </EventConnections>
+        <DataConnections>
+          <Connection Source="MODEL.POS_1_OUT" Destination="TT_VIEW_VAL.SD_1" dx1="55.555553" />
+          <Connection Source="MODEL.IS_FULL_OUT" Destination="TT_VIEW_VAL.SD_2" dx1="55.555553" />
+          <Connection Source="TT_CTRL_2_MODEL.RD_1" Destination="MODEL.POS_1_IN" dx1="55.555553" />
+          <Connection Source="TT_CTRL_2_MODEL.RD_2" Destination="MODEL.IS_FULL_IN" dx1="55.555553" />
+        </DataConnections>
+      </FBNetwork>
+    </Resource>
+  </Device>
+  <Device Name="VIEW" Type="FRAME_DEVICE" x="522.2222" y="1816.6666" >
+    <Parameter Name="BOUNDS" Value="[200,0,300,300]" />
+    <Resource Name="VIEW_Resource" Type="VIEW_PANEL" x="594.4444" y="1238.8888" >
+      <Parameter Name="DIA" Value="20" />
+      <Parameter Name="SIZE" Value="[15,15]" />
+      <FBNetwork >
+        <FB Name="space1" Type="XSPACE" x="6077.7773" y="999.99994" >
+          <Parameter Name="DIMS" Value="[8,2]" />
+          <Parameter Name="DIA" Value="10" />
+        </FB>
+        <FB Name="space4" Type="XSPACE" x="6905.555" y="805.55554" >
+          <Parameter Name="DIMS" Value="[6,3]" />
+          <Parameter Name="DIA" Value="20" />
+        </FB>
+        <FB Name="CONV2" Type="MECH_VIEW" x="3783.3333" y="883.3333" >
+          <Parameter Name="DIR" Value="LEFT" />
+          <Parameter Name="DIA" Value="20" />
+          <Parameter Name="LEN" Value="10" />
+          <Parameter Name="BKGD" Value="[220,220,220]" />
+        </FB>
+        <FB Name="CNV1" Type="MECH_VIEW" x="7649.9995" y="2166.6665" >
+          <Parameter Name="DIR" Value="UP" />
+          <Parameter Name="DIA" Value="20" />
+          <Parameter Name="LEN" Value="10" />
+          <Parameter Name="BKGD" Value="[220,220,220]" />
+        </FB>
+        <FB Name="CNV2_VIEW_VAL" Type="SUBL_3" x="2872.2222" y="2300.0" >
+        </FB>
+        <FB Name="CNV1_VIEW_VAL" Type="SUBL_3" x="6466.6665" y="2605.5554" >
+        </FB>
+        <FB Name="TurnTable" Type="MECH_VIEW" x="4738.8887" y="800.0" >
+          <Parameter Name="DIR" Value="RIGHT" />
+          <Parameter Name="DIA" Value="20" />
+          <Parameter Name="LEN" Value="1" />
+          <Parameter Name="BKGD" Value="[0,0,0]" />
+        </FB>
+        <FB Name="TurnTable_VIEW_VAL" Type="SUBL_3" x="3905.5554" y="2505.5554" >
+        </FB>
+        <FB Name="PUSHER_3" Type="OUT_BOOL" x="650.0" y="16.666666" >
+          <Parameter Name="LABEL" Value="B" />
+        </FB>
+        <FB Name="PUSHER_2" Type="OUT_BOOL" x="1161.1111" y="16.666666" >
+          <Parameter Name="LABEL" Value="Y" />
+        </FB>
+        <FB Name="PUSHER_1" Type="OUT_BOOL" x="1716.6666" y="16.666666" >
+          <Parameter Name="LABEL" Value="R" />
+        </FB>
+        <FB Name="space2" Type="XSPACE" x="2194.4443" y="16.666666" >
+          <Parameter Name="DIMS" Value="[10,2]" />
+          <Parameter Name="DIA" Value="10" />
+          <Parameter Name="COLORS" Value="[BLACK,BLACK]" />
+        </FB>
+        <FB Name="POS_1" Type="OUT_BOOL" x="988.88885" y="1188.8888" >
+          <Parameter Name="LABEL" Value="POS_1" />
+          <Parameter Name="QI" Value="1" />
+          <Parameter Name="IN" Value="1" />
+        </FB>
+        <FB Name="FULL" Type="OUT_BOOL" x="1516.6666" y="1544.4443" >
+          <Parameter Name="LABEL" Value="FULL" />
+        </FB>
+        <FB Name="TT_VIEW_VAL" Type="SUBL_2" x="122.22221" y="1588.8888" >
+        </FB>
+        <EventConnections>
+          <Connection Source="space4.INITO" Destination="CNV1.INIT" dx1="227.77777" dx2="55.555553" dy="794.4444" />
+          <Connection Source="space1.INITO" Destination="space4.INIT" dx1="55.555553" />
+          <Connection Source="CNV1.INITO" Destination="CNV2_VIEW_VAL.INIT" dx1="55.555553" dx2="55.555553" dy="1627.7777" />
+          <Connection Source="CNV2_VIEW_VAL.IND" Destination="CONV2.REQ" dx1="105.55555" />
+          <Connection Source="CNV1_VIEW_VAL.IND" Destination="CNV1.REQ" dx1="55.555553" />
+          <Connection Source="CONV2.INITO" Destination="TurnTable.INIT" dx1="55.555553" />
+          <Connection Source="TurnTable.INITO" Destination="space1.INIT" dx1="55.555553" />
+          <Connection Source="CNV2_VIEW_VAL.INITO" Destination="TurnTable_VIEW_VAL.INIT" dx1="55.555553" />
+          <Connection Source="TurnTable_VIEW_VAL.INITO" Destination="CNV1_VIEW_VAL.INIT" dx1="55.555553" />
+          <Connection Source="TurnTable_VIEW_VAL.IND" Destination="TurnTable.REQ" dx1="33.333332" />
+          <Connection Source="START.COLD" Destination="PUSHER_3.INIT" dx1="55.555553" />
+          <Connection Source="PUSHER_3.INITO" Destination="PUSHER_2.INIT" dx1="55.555553" />
+          <Connection Source="PUSHER_2.INITO" Destination="PUSHER_1.INIT" dx1="55.555553" />
+          <Connection Source="PUSHER_1.INITO" Destination="space2.INIT" dx1="55.555553" />
+          <Connection Source="space2.INITO" Destination="POS_1.INIT" dx1="77.77777" dx2="55.555553" dy="983.3333" />
+          <Connection Source="POS_1.INITO" Destination="FULL.INIT" dx1="55.555553" dx2="55.555553" dy="1711.1111" />
+          <Connection Source="FULL.INITO" Destination="CONV2.INIT" dx1="1844.4443" />
+          <Connection Source="START.COLD" Destination="TT_VIEW_VAL.INIT" dx1="27.777777" dx2="94.44444" dy="905.55554" />
+          <Connection Source="TT_VIEW_VAL.IND" Destination="POS_1.REQ" dx1="55.555553" />
+          <Connection Source="TT_VIEW_VAL.IND" Destination="FULL.REQ" dx1="55.555553" />
+        </EventConnections>
+        <DataConnections>
+          <Connection Source="CNV2_VIEW_VAL.RD_1" Destination="CONV2.POS" dx1="144.44444" />
+          <Connection Source="CNV2_VIEW_VAL.RD_2" Destination="CONV2.STYLE" dx1="205.55554" />
+          <Connection Source="CNV2_VIEW_VAL.RD_3" Destination="CONV2.WKPC" dx1="277.77777" />
+          <Connection Source="CNV1_VIEW_VAL.RD_1" Destination="CNV1.POS" dx1="205.55554" />
+          <Connection Source="CNV1_VIEW_VAL.RD_2" Destination="CNV1.STYLE" dx1="255.55554" />
+          <Connection Source="CNV1_VIEW_VAL.RD_3" Destination="CNV1.WKPC" dx1="355.55554" />
+          <Connection Source="TurnTable_VIEW_VAL.RD_1" Destination="TurnTable.POS" dx1="77.77777" />
+          <Connection Source="TurnTable_VIEW_VAL.RD_2" Destination="TurnTable.STYLE" dx1="150.0" />
+          <Connection Source="TurnTable_VIEW_VAL.RD_3" Destination="TurnTable.WKPC" dx1="233.33333" />
+          <Connection Source="TT_VIEW_VAL.RD_2" Destination="FULL.IN" dx1="55.555553" />
+        </DataConnections>
+      </FBNetwork>
+    </Resource>
+  </Device>
+</System>

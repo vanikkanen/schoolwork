@@ -1,0 +1,102 @@
+/* Copyright (c)2023 Holobloc Inc. All rights reserved. */
+package fb.rt.Conveyer;
+import fb.datatype.*;
+import fb.rt.*;
+/** FUNCTION_BLOCK TURNTABLE_MODEL (* Basic Function Block Type *)
+  * @author JHC
+  * @version 20230329/JHC - Generated.
+  */
+public class TURNTABLE_MODEL extends fb.rt.FBInstance {
+/** The index (0) of state START. */
+public static final int INDEX_START = 0;
+/** The index (1) of state INIT. */
+public static final int INDEX_INIT = 1;
+/** The index (2) of state REQ. */
+public static final int INDEX_REQ = 2;
+/** The index (3) of state UNLOAD. */
+public static final int INDEX_UNLOAD = 3;
+/** Initialization Confirm */
+public final EventOutput INITO = new EventOutput();
+/** Execution Confirmation */
+public final EventOutput CNF = new EventOutput();
+/** EVENT UNLOAD_O */
+public final EventOutput UNLOAD_O = new EventOutput();
+/** Initialization Request */
+public final EventServer INIT = (e) -> service_INIT();
+/** Normal Execution Request */
+public final EventServer REQ = (e) -> service_REQ();
+/** EVENT UNLOAD */
+public final EventServer UNLOAD = (e) -> service_UNLOAD();
+/** VAR POS_1_IN:BOOL */
+  public BOOL POS_1_IN = new BOOL();
+/** VAR IS_FULL_IN:BOOL */
+  public BOOL IS_FULL_IN = new BOOL();
+/** VAR WKPC:COLOR */
+  public COLOR WKPC = new COLOR();
+/** VAR POS_1_OUT:BOOL */
+  public final BOOL POS_1_OUT = new BOOL();
+/** VAR IS_FULL_OUT:BOOL */
+  public final BOOL IS_FULL_OUT = new BOOL();
+/** VAR WKPO:COLOR */
+  public final COLOR WKPO = new COLOR();
+/** The default constructor. */
+public TURNTABLE_MODEL(){
+    super();
+  }
+protected synchronized void service_INIT(){
+  if(eccState == INDEX_START){
+    state_INIT();
+  }
+}
+protected synchronized void service_REQ(){
+  if(eccState == INDEX_START){
+    state_REQ();
+  }
+}
+protected synchronized void service_UNLOAD(){
+  if(eccState == INDEX_START){
+    state_UNLOAD();
+  }
+}
+/** The actions to take upon entering state START. */
+void state_START(){
+   eccState = INDEX_START;
+}
+/** The actions to take upon entering state INIT. */
+void state_INIT(){
+   eccState = INDEX_INIT;
+   alg_INIT();
+   INITO.serviceEvent(this);
+   state_START();
+}
+/** The actions to take upon entering state REQ. */
+void state_REQ(){
+   eccState = INDEX_REQ;
+   alg_REQ();
+   CNF.serviceEvent(this);
+   state_START();
+}
+/** The actions to take upon entering state UNLOAD. */
+void state_UNLOAD(){
+   eccState = INDEX_UNLOAD;
+   UNLOAD_O.serviceEvent(this);
+   state_START();
+}
+  /** ALGORITHM INIT IN ST
+ * Initialization algorithm
+ */
+public void alg_INIT(){
+POS_1_IN.value = true;
+IS_FULL_IN.value = false;
+POS_1_OUT.value = true;
+IS_FULL_OUT.value = false;
+}
+  /** ALGORITHM REQ IN ST
+ * Normally executed algorithm
+ */
+public void alg_REQ(){
+POS_1_OUT.value = POS_1_IN.value;
+IS_FULL_OUT.value = IS_FULL_IN.value;
+WKPO.value = WKPC.value;
+}
+}

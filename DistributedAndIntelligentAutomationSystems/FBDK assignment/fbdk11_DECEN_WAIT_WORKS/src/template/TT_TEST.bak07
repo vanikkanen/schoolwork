@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "https://www.holobloc.com/xml/LibraryElement.dtd" >
+<FBType Name="TT_TEST" Comment="Basic Function Block Type" >
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Holobloc Inc" Version="0.3" Author="JHC" Date="2009-09-15" Remarks="Changed transition priorities." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.2" Author="JHC" Date="2003-12-04" Remarks="Renamed for better indexing." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-11-05" Remarks="Corrected missing ST element in Algorithm REQ." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2000-05-30" />
+<CompilerInfo packageName="fb.rt.template" >
+  <Import declaration="fb.datatype.*" />
+  <Import declaration="fb.rt.*" />
+</CompilerInfo>
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" Comment="Initialization Request" >
+        <With Var="CONV_1_STATE" />
+        <With Var="CONV_2_STATE" />
+      </Event>
+      <Event Name="REQ" Comment="Normal Execution Request" >
+        <With Var="CONV_1_STATE" />
+        <With Var="CONV_2_STATE" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" Comment="Initialization Confirm" >
+        <With Var="POS_1" />
+        <With Var="FULL" />
+      </Event>
+      <Event Name="CNF" >
+        <With Var="POS_1" />
+        <With Var="FULL" />
+      </Event>
+      <Event Name="LOAD" >
+      </Event>
+      <Event Name="UNLOAD" >
+      </Event>
+      <Event Name="TURN" >
+        <With Var="POS_1" />
+        <With Var="FULL" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="CONV_1_STATE" Type="BOOL" />
+      <VarDeclaration Name="CONV_2_STATE" Type="BOOL" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="POS_1" Type="BOOL" />
+      <VarDeclaration Name="FULL" Type="BOOL" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <ECC >
+      <ECState Name="START" Comment="Initial State" x="700.0" y="1022.22217" >
+      </ECState>
+      <ECState Name="INIT" Comment="Initialization" x="1350.0" y="644.4444" >
+        <ECAction Algorithm="INIT" Output="INITO" />
+      </ECState>
+      <ECState Name="LOAD" x="600.0" y="1727.7777" >
+        <ECAction Algorithm="LOAD_ALG" Output="CNF" />
+        <ECAction Output="LOAD" />
+      </ECState>
+      <ECState Name="TURN_1" x="1144.4445" y="2094.4443" >
+        <ECAction Algorithm="TURN_ALG" Output="TURN" />
+      </ECState>
+      <ECState Name="UNLOAD" x="2250.0" y="1550.0" >
+        <ECAction Algorithm="UNLOAD_ALG" Output="CNF" />
+        <ECAction Output="UNLOAD" />
+      </ECState>
+      <ECState Name="TURN_2" x="1550.0" y="1072.2222" >
+        <ECAction Algorithm="TURN_ALG" Output="TURN" />
+      </ECState>
+      <ECTransition Source="START" Destination="INIT" Condition="INIT" x="916.6666" y="738.88885" />
+      <ECTransition Source="INIT" Destination="START" Condition="1" x="1083.3333" y="838.88885" />
+      <ECTransition Source="START" Destination="LOAD" Condition="REQ [CONV_1_STATE = TRUE]" x="600.0" y="1366.6666" />
+      <ECTransition Source="LOAD" Destination="TURN_1" Condition="1" x="872.22217" y="1911.1111" />
+      <ECTransition Source="TURN_1" Destination="UNLOAD" Condition="REQ [CONV_2_STATE = TRUE]" x="1911.1111" y="1927.7777" />
+      <ECTransition Source="UNLOAD" Destination="TURN_2" Condition="1" x="1888.8888" y="1255.5555" />
+      <ECTransition Source="TURN_2" Destination="START" Condition="1" x="1150.0" y="1022.22217" />
+    </ECC>
+  <Algorithm Name="INIT" Comment="Initialization algorithm" >
+<ST><![CDATA[POS_1 := TRUE;
+FULL := FALSE;]]></ST>
+  </Algorithm>
+  <Algorithm Name="LOAD_ALG" >
+<ST><![CDATA[FULL := TRUE;]]></ST>
+  </Algorithm>
+  <Algorithm Name="TURN_ALG" >
+<ST><![CDATA[POS_1 := NOT POS_1;]]></ST>
+  </Algorithm>
+  <Algorithm Name="UNLOAD_ALG" >
+<ST><![CDATA[FULL := FALSE;]]></ST>
+  </Algorithm>
+  </BasicFB>
+</FBType>

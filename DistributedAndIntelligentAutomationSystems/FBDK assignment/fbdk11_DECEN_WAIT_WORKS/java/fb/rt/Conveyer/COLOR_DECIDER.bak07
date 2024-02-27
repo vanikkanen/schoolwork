@@ -1,0 +1,55 @@
+/* Copyright (c)2023 Holobloc Inc. All rights reserved. */
+package fb.rt.Conveyer;
+import fb.datatype.*;
+import fb.rt.*;
+import fb.rt.mva.VSTYLE;
+/** FUNCTION_BLOCK COLOR_DECIDER (* Basic Function Block Type *)
+  * @author JHC
+  * @version 20230329/JHC - Generated.
+  */
+public class COLOR_DECIDER extends fb.rt.FBInstance {
+/** The index (0) of state START. */
+public static final int INDEX_START = 0;
+/** The index (1) of state REQ. */
+public static final int INDEX_REQ = 1;
+/** Execution Confirmation */
+public final EventOutput CNF = new EventOutput();
+/** EVENT REQ */
+public final EventServer REQ = (e) -> service_REQ();
+/** VAR COLOR_IN:COLOR */
+  public COLOR COLOR_IN = new COLOR();
+/** VAR STYLE_IN:VSTYLE */
+  public VSTYLE STYLE_IN = new VSTYLE();
+/** VAR POS:UINT */
+  public final UINT POS = new UINT("0");
+/** VAR STYLE:VSTYLE */
+  public final VSTYLE STYLE = new VSTYLE("PALLET");
+/** VAR WKPC:COLOR */
+  public final COLOR WKPC = new COLOR();
+/** The default constructor. */
+public COLOR_DECIDER(){
+    super();
+  }
+protected synchronized void service_REQ(){
+  if(eccState == INDEX_START){
+    state_REQ();
+  }
+}
+/** The actions to take upon entering state START. */
+void state_START(){
+   eccState = INDEX_START;
+}
+/** The actions to take upon entering state REQ. */
+void state_REQ(){
+   eccState = INDEX_REQ;
+   alg_REQ();
+   CNF.serviceEvent(this);
+   state_START();
+}
+  /** ALGORITHM REQ IN ST */
+public void alg_REQ(){
+POS.value = 0;
+STYLE.value = STYLE_IN.value;
+WKPC.value = COLOR_IN.value;
+}
+}

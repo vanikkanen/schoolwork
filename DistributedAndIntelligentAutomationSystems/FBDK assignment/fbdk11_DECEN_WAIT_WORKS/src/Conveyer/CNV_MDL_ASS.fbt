@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "https://www.holobloc.com/xml/LibraryElement.dtd" >
+<FBType Name="CNV_MDL_ASS" Comment="Simple Conveyor Model for 1 Workpiece" >
+  <Identification Standard="61499-1" Classification="Simulation" />
+  <VersionInfo Organization="Holobloc Inc" Version="1.0" Author="JHC" Date="2018-05-09" Remarks="Added ECC, EMPTY; simplified algorithms for documentation." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2004-09-20" Remarks="Simplified from CNV_MDL." />
+<CompilerInfo packageName="fb.rt.Conveyer" >
+  <Compiler Language="Java" Vendor="Sun" Product="JDK" Version="1.7.0" />
+  <Import declaration="fb.datatype.*" />
+  <Import declaration="fb.rt.*" />
+  <Import declaration="fb.rt.mva.VSTYLE" />
+</CompilerInfo>
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="CLK" Comment="Simulation Clock Event" >
+        <With Var="MTR_ON" />
+        <With Var="VF" />
+        <With Var="FAULT" />
+      </Event>
+      <Event Name="LOAD" Comment="Load Workpiece if at HOME position" >
+        <With Var="STYLE" />
+        <With Var="WKPC" />
+        <With Var="LPOS" />
+      </Event>
+      <Event Name="UNLD" Comment="Unload Workpiece if at END position" >
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INDR" Comment="Change in Rendering Data" >
+        <With Var="POS" />
+        <With Var="STYLO" />
+        <With Var="WKPO" />
+      </Event>
+      <Event Name="INDS" Comment="Change in Sensor Data" >
+        <With Var="END" />
+      </Event>
+      <Event Name="UNLD_DATA" >
+        <With Var="STYLO" />
+        <With Var="WKPO" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="MTR_ON" Type="BOOL" Comment="Motor ON command" />
+      <VarDeclaration Name="FAULT" Type="BOOL" Comment="Fault Condition" />
+      <VarDeclaration Name="VF" Type="UINT" Comment="Conveyor Speed in % per CLK event" />
+      <VarDeclaration Name="LPOS" Type="UINT" Comment="Load Position in % of Conveyor Length" />
+      <VarDeclaration Name="STYLE" Type="VSTYLE" InitialValue="NONE" Comment="Input Workpiece style" />
+      <VarDeclaration Name="WKPC" Type="COLOR" InitialValue="yellow" Comment="Input Workpiece Color" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="END" Type="BOOL" Comment="Workpiece at End Position" />
+      <VarDeclaration Name="POS" Type="UINT" Comment="Workpiece Position in % of Conveyor Length" />
+      <VarDeclaration Name="STYLO" Type="VSTYLE" InitialValue="NONE" Comment="Currently loaded workpiece style" />
+      <VarDeclaration Name="WKPO" Type="COLOR" InitialValue="blue" Comment="Currently loaded workpiece color" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <InternalVars>
+      <VarDeclaration Name="EMPTY" Type="BOOL" InitialValue="TRUE" Comment="STYLO = VSTYLE#NONE" />
+    </InternalVars>
+    <ECC >
+      <ECState Name="START" x="294.44443" y="838.88885" >
+      </ECState>
+      <ECState Name="LOAD" x="294.44443" y="105.55555" >
+        <ECAction Algorithm="LOAD" Output="INDR" />
+      </ECState>
+      <ECState Name="UNLD" x="1138.8888" y="105.55555" >
+        <ECAction Algorithm="UNLD" Output="INDR" />
+        <ECAction Output="UNLD_DATA" />
+      </ECState>
+      <ECState Name="CLK" x="1683.3333" y="1405.5555" >
+        <ECAction Algorithm="CLK" Output="INDR" />
+      </ECState>
+      <ECState Name="INDS" Comment="Sensor change indication" x="1683.3333" y="838.88885" >
+        <ECAction Output="INDS" />
+      </ECState>
+      <ECTransition Source="START" Destination="CLK" Condition="CLK [MTR_ON AND NOT FAULT AND NOT EMPTY AND NOT END]" x="988.88885" y="1605.5555" />
+      <ECTransition Source="START" Destination="LOAD" Condition="LOAD [EMPTY]" x="294.44443" y="405.55554" />
+      <ECTransition Source="START" Destination="UNLD" Condition="UNLD [NOT EMPTY]" x="1138.8888" y="633.3333" />
+      <ECTransition Source="INDS" Destination="START" Condition="1" x="861.1111" y="838.88885" />
+      <ECTransition Source="LOAD" Destination="INDS" Condition="1" x="1561.1111" y="477.77777" />
+      <ECTransition Source="UNLD" Destination="INDS" Condition="1" x="1688.8888" y="461.11108" />
+      <ECTransition Source="CLK" Destination="INDS" Condition=" [END]" x="1683.3333" y="1177.7777" />
+      <ECTransition Source="CLK" Destination="START" Condition=" [NOT END]" x="1116.6666" y="1172.2222" />
+    </ECC>
+  <Algorithm Name="LOAD" >
+<Other Language="Java"><![CDATA[POS.value = Math.min(100,LPOS.value);
+END.value = (POS.value==100)&&(STYLE.value != VSTYLE.NONE);
+STYLO.value = STYLE.value;
+WKPO.value = WKPC.value;
+EMPTY.value = (STYLE.value == VSTYLE.NONE);]]></Other>
+  </Algorithm>
+  <Algorithm Name="UNLD" >
+<Other Language="Java"><![CDATA[STYLO.value=VSTYLE.NONE;
+END.value = false;
+EMPTY.value = true;]]></Other>
+  </Algorithm>
+  <Algorithm Name="CLK" >
+<Other Language="Java"><![CDATA[POS.value += VF.value;
+if(POS.value>=100){
+POS.value=100;
+END.value=true;}]]></Other>
+  </Algorithm>
+  </BasicFB>
+</FBType>

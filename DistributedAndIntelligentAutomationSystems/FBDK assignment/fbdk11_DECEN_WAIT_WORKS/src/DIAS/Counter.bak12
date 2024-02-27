@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "https://www.holobloc.com/xml/LibraryElement.dtd" >
+<FBType Name="Counter" Comment="Basic Function Block Type" >
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Holobloc Inc" Version="0.3" Author="JHC" Date="2009-09-15" Remarks="Changed transition priorities." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.2" Author="JHC" Date="2003-12-04" Remarks="Renamed for better indexing." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-11-05" Remarks="Corrected missing ST element in Algorithm REQ." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2000-05-30" />
+<CompilerInfo packageName="fb.rt.DIAS" >
+  <Import declaration="fb.datatype.*" />
+  <Import declaration="fb.rt.*" />
+</CompilerInfo>
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="REQ" Comment="Normal Execution Request" >
+      </Event>
+      <Event Name="RESET" >
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="CNF" Comment="Execution Confirmation" >
+        <With Var="CV" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="LIMIT" Type="INT" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="CV" Type="INT" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <InternalVars>
+      <VarDeclaration Name="COUNT" Type="INT" InitialValue="1" />
+    </InternalVars>
+    <ECC >
+      <ECState Name="START" Comment="Initial State" x="477.77777" y="377.77777" >
+      </ECState>
+      <ECState Name="REQ" Comment="Normal execution" x="261.1111" y="1394.4443" >
+        <ECAction Algorithm="REQ" />
+      </ECState>
+      <ECState Name="RESET" x="1427.7777" y="1144.4445" >
+        <ECAction Algorithm="RESET_ALG" />
+      </ECState>
+      <ECState Name="OUTPUT" x="1644.4443" y="411.11108" >
+        <ECAction Algorithm="RESET_ALG" Output="CNF" />
+      </ECState>
+      <ECTransition Source="REQ" Destination="START" Condition="1" x="183.33333" y="761.1111" />
+      <ECTransition Source="START" Destination="RESET" Condition="RESET" x="816.6666" y="922.22217" />
+      <ECTransition Source="RESET" Destination="START" Condition="1" x="1055.5555" y="783.3333" />
+      <ECTransition Source="START" Destination="OUTPUT" Condition="REQ [COUNT>=LIMIT]" x="1011.1111" y="499.99997" />
+      <ECTransition Source="OUTPUT" Destination="START" Condition="1" x="994.4444" y="272.2222" />
+      <ECTransition Source="START" Destination="REQ" Condition="REQ" x="477.77777" y="838.88885" />
+    </ECC>
+  <Algorithm Name="REQ" >
+<ST><![CDATA[COUNT := COUNT+1;
+CV := COUNT;]]></ST>
+  </Algorithm>
+  <Algorithm Name="RESET_ALG" >
+<ST><![CDATA[COUNT := 0;]]></ST>
+  </Algorithm>
+  </BasicFB>
+</FBType>

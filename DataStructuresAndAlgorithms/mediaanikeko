@@ -1,0 +1,108 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+#include <random>
+#include <string>
+#include <deque>
+
+int main()
+{
+    // Initialize deque with values from 1 to 10    
+    std::deque<int> cont {1,2,3,4,5,6,7,8,9,10};    
+    // Make another deque with random 10 values   
+    // std::deque<int> cont {10, 22, 12, 3, 2, 18, 1, 5, 7, 9};
+    // Make another deque with random 10 values    
+    // std::cout << "Give initial values (end=-1)" << std::endl;    
+    // while (std::cin)    
+    // {    
+        //     int value;    
+    //     std::cin >> value;    
+    //     if (!std::cin || value == -1) { break; }    
+    //     cont.push_back(value);    
+    // }    std::cout << "Initial container: ";
+
+    for (auto i : cont) { std::cout << i << ' '; }
+    std::cout << std::endl;
+    heap_median_make(cont);
+    std::cout << "Container after heap_median_make(): ";
+    for (auto i : cont) { std::cout << i << ' '; }
+    std::cout << std::endl;
+    // Show container size    std::cout << "Container size: " << cont.size() << std::endl;
+    std::cout << "Median: " << heap_median(cont) << std::endl;
+    while (std::cin)
+    {
+        std::cout << "Command (I(nsert)/M(edian)/P(op)/Q(uit))? ";
+        char cmd;
+        std::cin >> cmd;
+        if (!std::cin || cmd == 'q' || cmd == 'Q') { break; }
+        switch (cmd)
+        {
+            case 'i':
+            case 'I':
+            {
+                int value;
+                std::cin >> value;
+                if (std::cin) { heap_median_insert(cont, value); }
+                break;
+            }
+            case 'm':
+            case 'M':
+            {
+                auto median = heap_median(cont);
+                std:: cout << "Median: " << median << std::endl;
+                break;
+            }
+            case 'p':
+            case 'P':
+            {
+                heap_median_pop_median(cont);
+                break;
+            }
+            default:
+            {
+                std::cout << "Unknown command!" << std::endl;
+            }
+        }
+        std::cout << "Container after operation: ";
+        for (auto i : cont) { std::cout << i << ' '; }
+        std::cout << std::endl;
+        // print container length after operation        std::cout << "size=" << cont.size() << " " << std::endl; 
+    }
+}
+
+void heap_median_make(std::deque<int> &cont) {
+    // split into two similar sized pieces with larger than median on one side and lesser than on other side
+    int n = cont.size()/2;
+    std::nth_element(cont.begin(), cont.begin()+n, cont.end());
+    int median = cont[n];
+
+
+
+    for (int i: cont) {
+        if (i < median) {
+
+        }
+    }
+
+    // make max heap
+    std::make_heap(cont.begin(), cont.end());
+    // make min heap
+
+    // make into one
+
+
+}
+
+int heap_median(std::deque<int> cont) {
+    return 0;
+}
+
+void heap_median_insert(std::deque<int> &cont, int value) {
+
+}
+
+void heap_median_pop_median(std::deque<int> &cont) {
+
+}
+

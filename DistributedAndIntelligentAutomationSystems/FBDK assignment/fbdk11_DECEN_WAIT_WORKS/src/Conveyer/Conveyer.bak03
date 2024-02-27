@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE System SYSTEM "https://www.holobloc.com/xml/LibraryElement.dtd" >
+<System Name="Conveyer" Comment="System Configuration" >
+  <Identification Standard="61499-1" />
+  <VersionInfo Organization="Holobloc Inc." Version="0.4" Author="JHC" Date="2009-03-05" Remarks="Deleted Application." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.3" Author="JHC" Date="2003-12-05" Remarks="Renamed from NEWSYSTEM." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.2" Author="JHC" Date="2002-11-05" Remarks="Fixed missing (empty) FBD in Application." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-01-17" Remarks="Minor cleanup" />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2000-05-27" />
+<CompilerInfo packageName="fb.rt.Conveyer" >
+  <Import declaration="fb.datatype.*" />
+  <Import declaration="fb.rt.*" />
+  <Import declaration="fb.rt.hmi.FRAME_DEVICE" />
+  <Import declaration="java.awt.*" />
+</CompilerInfo>
+  <Device Name="HMI" Type="FRAME_DEVICE" x="483.3333" y="483.3333" >
+    <Parameter Name="BOUNDS" Value="[0,0,200,300]" />
+    <Parameter Name="GRID" Value="[1,1]" />
+    <Resource Name="HMI_Panel" Type="PANEL_RESOURCE" x="294.44443" y="311.11108" >
+    </Resource>
+  </Device>
+  <Device Name="VIEW" Type="FRAME_DEVICE" x="472.2222" y="1188.8888" >
+    <Parameter Name="BOUNDS" Value="[200,0,300,300]" />
+    <Resource Name="VIEW_Resource" Type="VIEW_PANEL" x="594.4444" y="1238.8888" >
+      <Parameter Name="DIA" Value="20" />
+      <Parameter Name="SIZE" Value="[15,15]" />
+      <FBNetwork >
+        <FB Name="run_button" Type="IN_EVENT" x="999.99994" y="177.77777" >
+          <Parameter Name="LABEL" Value="&#34;RUN&#34;" />
+        </FB>
+        <FB Name="green_clock" Type="IN_ANY" x="5111.111" y="1172.2222" >
+          <Parameter Name="TYPE" Value="&#34;GREEN_TIME&#34;" />
+        </FB>
+        <FB Name="yellow_clock" Type="IN_ANY" x="5166.6665" y="2277.7776" >
+          <Parameter Name="TYPE" Value="&#34;YELLOW_TIME&#34;" />
+        </FB>
+        <FB Name="green_cycle" Type="E_CYCLE" x="4327.778" y="1994.4443" >
+        </FB>
+        <FB Name="yellow_cycle" Type="E_CYCLE" x="4355.555" y="2705.5554" >
+        </FB>
+        <FB Name="CNV1" Type="MECHC_VIEW" x="1933.3333" y="605.55554" >
+        </FB>
+        <FB Name="CONV2" Type="MECHC_VIEW" x="3027.7776" y="1388.8888" >
+        </FB>
+        <EventConnections>
+          <Connection Source="START.COLD" Destination="run_button.INIT" dx1="55.555553" />
+          <Connection Source="run_button.INITO" Destination="CNV1.INIT" dx1="55.555553" />
+          <Connection Source="CNV1.INITO" Destination="CONV2.INIT" dx1="55.555553" />
+        </EventConnections>
+      </FBNetwork>
+    </Resource>
+  </Device>
+</System>

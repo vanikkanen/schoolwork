@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "https://www.holobloc.com/xml/LibraryElement.dtd" >
+<FBType Name="TURNTABLE_CTRL" Comment="Basic Function Block Type" >
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Holobloc Inc" Version="0.3" Author="JHC" Date="2009-09-15" Remarks="Changed transition priorities." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.2" Author="JHC" Date="2003-12-04" Remarks="Renamed for better indexing." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-11-05" Remarks="Corrected missing ST element in Algorithm REQ." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2000-05-30" />
+<CompilerInfo packageName="fb.rt.Conveyer" >
+  <Import declaration="fb.datatype.*" />
+  <Import declaration="fb.rt.*" />
+</CompilerInfo>
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" Comment="Initialization Request" >
+      </Event>
+      <Event Name="LOAD" >
+      </Event>
+      <Event Name="TURN_1" >
+      </Event>
+      <Event Name="TURN_2" >
+      </Event>
+      <Event Name="UNLOAD" >
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" Comment="Initialization Confirm" >
+        <With Var="LOAD_STATE" />
+        <With Var="IS_FULL" />
+        <With Var="POS_1" />
+      </Event>
+      <Event Name="CNF" >
+        <With Var="IS_FULL" />
+        <With Var="POS_1" />
+        <With Var="LOAD_STATE" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="CONVEYOR_1" Type="BOOL" />
+      <VarDeclaration Name="CONVEYOR_2" Type="BOOL" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="IS_FULL" Type="BOOL" />
+      <VarDeclaration Name="POS_1" Type="BOOL" />
+      <VarDeclaration Name="LOAD_STATE" Type="BOOL" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <ECC >
+      <ECState Name="START" Comment="Initial State" x="1272.2222" y="661.1111" >
+      </ECState>
+      <ECState Name="INIT" Comment="Initialization" x="2116.6665" y="1500.0" >
+        <ECAction Algorithm="INIT" Output="INITO" />
+      </ECState>
+      <ECState Name="FULL" x="4033.3333" y="2172.2222" >
+        <ECAction Algorithm="LOAD_ALG" Output="CNF" />
+      </ECState>
+      <ECState Name="LOAD" x="3150.0" y="2172.2222" >
+        <ECAction Algorithm="TURN_ALG" Output="CNF" />
+      </ECState>
+      <ECState Name="UNLOAD" x="4055.5554" y="2855.5554" >
+        <ECAction Algorithm="TURN_ALG" Output="CNF" />
+      </ECState>
+      <ECState Name="EMPTY" x="3161.111" y="2877.7776" >
+        <ECAction Algorithm="UNLOAD_ALG" Output="CNF" />
+      </ECState>
+      <ECTransition Source="START" Destination="INIT" Condition="INIT" x="1627.7777" y="1127.7777" />
+      <ECTransition Source="LOAD" Destination="FULL" Condition="LOAD [CONVEYOR_1]" x="3605.5554" y="1916.6666" />
+      <ECTransition Source="UNLOAD" Destination="EMPTY" Condition="UNLOAD [CONVEYOR_2]" x="3616.6665" y="3188.8887" />
+      <ECTransition Source="EMPTY" Destination="LOAD" Condition="TURN_1" x="2894.4443" y="2522.2222" />
+      <ECTransition Source="FULL" Destination="UNLOAD" Condition="TURN_2 [IS_FULL]" x="4388.8887" y="2511.111" />
+      <ECTransition Source="INIT" Destination="LOAD" Condition="1" x="2638.8887" y="1922.2222" />
+    </ECC>
+  <Algorithm Name="INIT" Comment="Initialization algorithm" >
+<ST><![CDATA[IS_FULL := FALSE;
+POS_1 := FALSE;
+CONVEYOR_1 := FALSE;
+CONVEYOR_2 := FALSE;]]></ST>
+  </Algorithm>
+  <Algorithm Name="LOAD_ALG" >
+<ST><![CDATA[IS_FULL := TRUE;]]></ST>
+  </Algorithm>
+  <Algorithm Name="UNLOAD_ALG" >
+<ST><![CDATA[IS_FULL := FALSE;]]></ST>
+  </Algorithm>
+  <Algorithm Name="TURN_ALG" >
+<ST><![CDATA[LOAD_STATE := TRUE;
+IF POS_1 = TRUE THEN
+	POS_1 := FALSE;
+ELSE
+	POS_1 := TRUE;
+END_IF]]></ST>
+  </Algorithm>
+  </BasicFB>
+</FBType>

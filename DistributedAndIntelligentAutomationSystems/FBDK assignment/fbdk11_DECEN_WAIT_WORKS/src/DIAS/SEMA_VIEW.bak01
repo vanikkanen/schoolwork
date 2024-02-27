@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "https://www.holobloc.com/xml/LibraryElement.dtd" >
+<FBType Name="SEMA_VIEW" >
+  <Identification Standard="61499-1" Classification="HMI" Function="Output" Type="4xLED" />
+  <VersionInfo Organization="Holobloc Inc" Version="0.4" Author="JHC" Date="2018-07-27" Remarks="Updated I/O documentation." />
+  <VersionInfo Organization="Holobloc Inc" Version="0.3" Author="JHC" Date="2011-03-28" Remarks="Updated documentation." />
+  <VersionInfo Organization="Holobloc Inc" Version="0.2" Author="JHC" Date="2008-11-10" Remarks="Moved to fb.rt.doc." />
+  <VersionInfo Organization="Holobloc Inc" Version="0.1" Author="JHC" Date="2008-06-04" Remarks="Updated DOCTYPE." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2001-02-21" />
+<CompilerInfo packageName="fb.rt.DIAS" >
+  <Compiler Language="Java" Vendor="Sun" Product="JDK" Version="1.7.0" />
+  <Import declaration="fb.datatype.*" />
+  <Import declaration="fb.rt.*" />
+  <Import declaration="fb.rt.hmi.*" />
+</CompilerInfo>
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" Comment="Initialize" >
+        <With Var="LED2" />
+        <With Var="LED1" />
+        <With Var="LED0" />
+        <With Var="C0" />
+        <With Var="C1" />
+      </Event>
+      <Event Name="REQ" Comment="LED State/Color Update" >
+        <With Var="LED2" />
+        <With Var="LED1" />
+        <With Var="LED0" />
+        <With Var="C0" />
+        <With Var="C1" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" Comment="INIT Confirm" >
+      </Event>
+      <Event Name="CNF" Comment="REQ Confirmation" >
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="LED2" Type="BOOL" />
+      <VarDeclaration Name="LED1" Type="BOOL" />
+      <VarDeclaration Name="LED0" Type="BOOL" Comment="LSB - Least Significant Bit" />
+      <VarDeclaration Name="C0" Type="COLOR" InitialValue="COLOR#white" Comment="OFF color" />
+      <VarDeclaration Name="C1" Type="COLOR" InitialValue="COLOR#orange" Comment="ON color" />
+    </InputVars>
+  </InterfaceList>
+  <FBNetwork >
+    <FB Name="OUT2" Type="OUT_BOOL" x="944.4444" y="11.111111" >
+      <Parameter Name="QI" Value="1" />
+      <Parameter Name="LABEL" Value="&#34;GREEN&#34;" />
+    </FB>
+    <FB Name="OUT1" Type="OUT_BOOL" x="1605.5555" y="11.111111" >
+      <Parameter Name="QI" Value="1" />
+      <Parameter Name="LABEL" Value="&#34;YELLOW&#34;" />
+    </FB>
+    <FB Name="OUT0" Type="OUT_BOOL" x="2277.7776" y="11.111111" >
+      <Parameter Name="QI" Value="1" />
+      <Parameter Name="LABEL" Value="&#34;RED&#34;" />
+    </FB>
+    <FB Name="SYNC" Type="PANEL_SYNC" Comment="Synchronize frame buffer" x="2761.111" y="122.22221" >
+      <Parameter Name="QI" Value="1" />
+    </FB>
+    <EventConnections>
+      <Connection Source="OUT2.INITO" Destination="OUT1.INIT" dx1="35.2941" />
+      <Connection Source="OUT1.INITO" Destination="OUT0.INIT" dx1="41.1765" />
+      <Connection Source="OUT0.INITO" Destination="INITO" dx1="2764.7058" />
+      <Connection Source="OUT2.CNF" Destination="OUT1.REQ" dx1="64.7059" />
+      <Connection Source="OUT1.CNF" Destination="OUT0.REQ" dx1="64.7059" />
+      <Connection Source="OUT0.CNF" Destination="SYNC.REQ" dx1="55.555553" />
+      <Connection Source="SYNC.CNF" Destination="CNF" />
+      <Connection Source="INIT" Destination="OUT2.INIT" />
+      <Connection Source="REQ" Destination="OUT2.REQ" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="LED2" Destination="OUT2.IN" dx1="823.5294" />
+      <Connection Source="LED1" Destination="OUT1.IN" dx1="1482.3529" />
+      <Connection Source="LED0" Destination="OUT0.IN" dx1="2152.9412" />
+      <Connection Source="C0" Destination="OUT2.C0" dx1="858.8235" />
+      <Connection Source="C0" Destination="OUT1.C0" dx1="1517.647" />
+      <Connection Source="C0" Destination="OUT0.C0" dx1="2188.2354" />
+      <Connection Source="C1" Destination="OUT2.C1" dx1="858.8235" />
+      <Connection Source="C1" Destination="OUT1.C1" dx1="1517.647" />
+      <Connection Source="C1" Destination="OUT0.C1" dx1="2188.2354" />
+    </DataConnections>
+  </FBNetwork>
+</FBType>

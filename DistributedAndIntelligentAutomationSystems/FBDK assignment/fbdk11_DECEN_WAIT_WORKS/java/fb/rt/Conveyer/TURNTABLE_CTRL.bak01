@@ -1,0 +1,133 @@
+/* Copyright (c)2023 Holobloc Inc. All rights reserved. */
+package fb.rt.Conveyer;
+import fb.datatype.*;
+import fb.rt.*;
+/** FUNCTION_BLOCK TURNTABLE_CTRL (* Basic Function Block Type *)
+  * @author JHC
+  * @version 20230329/JHC - Generated.
+  */
+public class TURNTABLE_CTRL extends fb.rt.FBInstance {
+/** The index (0) of state START. */
+public static final int INDEX_START = 0;
+/** The index (1) of state INIT. */
+public static final int INDEX_INIT = 1;
+/** The index (2) of state FULL. */
+public static final int INDEX_FULL = 2;
+/** The index (3) of state LOAD. */
+public static final int INDEX_LOAD = 3;
+/** The index (4) of state UNLOAD. */
+public static final int INDEX_UNLOAD = 4;
+/** The index (5) of state EMPTY. */
+public static final int INDEX_EMPTY = 5;
+/** Initialization Confirm */
+public final EventOutput INITO = new EventOutput();
+/** EVENT CNF */
+public final EventOutput CNF = new EventOutput();
+/** Initialization Request */
+public final EventServer INIT = (e) -> service_INIT();
+/** EVENT LOAD */
+public final EventServer LOAD = (e) -> service_LOAD();
+/** EVENT TURN_1 */
+public final EventServer TURN_1 = (e) -> service_TURN_1();
+/** EVENT TURN_2 */
+public final EventServer TURN_2 = (e) -> service_TURN_2();
+/** EVENT UNLOAD */
+public final EventServer UNLOAD = (e) -> service_UNLOAD();
+/** VAR CONVEYOR_1:BOOL */
+  public BOOL CONVEYOR_1 = new BOOL();
+/** VAR CONVEYOR_2:BOOL */
+  public BOOL CONVEYOR_2 = new BOOL();
+/** VAR IS_FULL:BOOL */
+  public final BOOL IS_FULL = new BOOL();
+/** VAR POS_1:BOOL */
+  public final BOOL POS_1 = new BOOL();
+/** The default constructor. */
+public TURNTABLE_CTRL(){
+    super();
+  }
+protected synchronized void service_INIT(){
+  if(eccState == INDEX_START){
+    state_INIT();
+  }
+}
+protected synchronized void service_LOAD(){
+  if((eccState == INDEX_LOAD) && (CONVEYOR_1.value)){
+    state_FULL();
+  }
+}
+protected synchronized void service_TURN_1(){
+  if(eccState == INDEX_EMPTY){
+    state_LOAD();
+  }
+}
+protected synchronized void service_TURN_2(){
+  if((eccState == INDEX_FULL) && (IS_FULL.value)){
+    state_UNLOAD();
+  }
+}
+protected synchronized void service_UNLOAD(){
+  if((eccState == INDEX_UNLOAD) && (CONVEYOR_2.value)){
+    state_EMPTY();
+  }
+}
+/** The actions to take upon entering state START. */
+void state_START(){
+   eccState = INDEX_START;
+}
+/** The actions to take upon entering state INIT. */
+void state_INIT(){
+   eccState = INDEX_INIT;
+   alg_INIT();
+   INITO.serviceEvent(this);
+   state_LOAD();
+}
+/** The actions to take upon entering state FULL. */
+void state_FULL(){
+   eccState = INDEX_FULL;
+   alg_LOAD_ALG();
+   CNF.serviceEvent(this);
+}
+/** The actions to take upon entering state LOAD. */
+void state_LOAD(){
+   eccState = INDEX_LOAD;
+   alg_TURN_ALG();
+   CNF.serviceEvent(this);
+}
+/** The actions to take upon entering state UNLOAD. */
+void state_UNLOAD(){
+   eccState = INDEX_UNLOAD;
+   alg_TURN_ALG();
+   CNF.serviceEvent(this);
+}
+/** The actions to take upon entering state EMPTY. */
+void state_EMPTY(){
+   eccState = INDEX_EMPTY;
+   alg_UNLOAD_ALG();
+   CNF.serviceEvent(this);
+}
+  /** ALGORITHM INIT IN ST
+ * Initialization algorithm
+ */
+public void alg_INIT(){
+IS_FULL.value = false;
+POS_1.value = false;
+CONVEYOR_1.value = false;
+CONVEYOR_2.value = false;
+}
+  /** ALGORITHM LOAD_ALG IN ST */
+public void alg_LOAD_ALG(){
+IS_FULL.value = true;
+}
+  /** ALGORITHM UNLOAD_ALG IN ST */
+public void alg_UNLOAD_ALG(){
+IS_FULL.value = false;
+}
+  /** ALGORITHM TURN_ALG IN ST */
+public void alg_TURN_ALG(){
+if( POS_1.value == true ){
+	POS_1.value = false;
+}else{
+	POS_1.value = true;
+}
+}
+}

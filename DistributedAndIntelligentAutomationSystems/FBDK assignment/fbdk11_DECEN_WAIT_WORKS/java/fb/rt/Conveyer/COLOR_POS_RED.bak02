@@ -1,0 +1,58 @@
+/* Copyright (c)2023 Holobloc Inc. All rights reserved. */
+package fb.rt.Conveyer;
+import fb.datatype.*;
+import fb.rt.*;
+/** FUNCTION_BLOCK COLOR_POS_RED (* Basic Function Block Type *)
+  * @author JHC
+  * @version 20230329/JHC - Generated.
+  */
+public class COLOR_POS_RED extends fb.rt.FBInstance {
+/** The index (0) of state START. */
+public static final int INDEX_START = 0;
+/** The index (1) of state CHECK_VALS. */
+public static final int INDEX_CHECK_VALS = 1;
+/** Execution Confirmation */
+public final EventOutput CNF = new EventOutput();
+/** Normal Execution Request */
+public final EventServer REQ = (e) -> service_REQ();
+/** VAR WKPC_COL:COLOR */
+  public COLOR WKPC_COL = new COLOR();
+/** VAR WKPC_POS:UINT */
+  public UINT WKPC_POS = new UINT();
+/** VAR Check_col:COLOR */
+  public COLOR Check_col = new COLOR();
+/** VAR PUSH_POS:UINT */
+  public UINT PUSH_POS = new UINT();
+/** Output event qualifier */
+  public final BOOL QO = new BOOL();
+/** The default constructor. */
+public COLOR_POS_RED(){
+    super();
+  }
+protected synchronized void service_REQ(){
+  if(eccState == INDEX_START){
+    state_CHECK_VALS();
+  }
+}
+/** The actions to take upon entering state START. */
+void state_START(){
+   eccState = INDEX_START;
+}
+/** The actions to take upon entering state CHECK_VALS. */
+void state_CHECK_VALS(){
+   eccState = INDEX_CHECK_VALS;
+   alg_REQ();
+   CNF.serviceEvent(this);
+   state_START();
+}
+  /** ALGORITHM REQ IN ST
+ * Normally executed algorithm
+ */
+public void alg_REQ(){
+if(  (WKPC_POS.value>=PUSH_POS.value) && (WKPC_COL.value==Check_col.value) ){;
+	QO.value = true;
+}else{
+	QO.value = false;
+}
+}
+}

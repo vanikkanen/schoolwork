@@ -1,0 +1,89 @@
+/* Copyright (c)2023 Holobloc Inc. All rights reserved. */
+package fb.rt.Conveyer;
+import fb.datatype.*;
+import fb.rt.*;
+import fb.rt.mva.VSTYLE;
+/** FUNCTION_BLOCK COLOR_DECIDER (* Basic Function Block Type *)
+  * @author JHC
+  * @version 20230329/JHC - Generated.
+  */
+public class COLOR_DECIDER extends fb.rt.FBInstance {
+/** The index (0) of state START. */
+public static final int INDEX_START = 0;
+/** The index (1) of state BLUE_IN. */
+public static final int INDEX_BLUE_IN = 1;
+/** The index (2) of state YELLOW_IN. */
+public static final int INDEX_YELLOW_IN = 2;
+/** The index (3) of state RED_IN. */
+public static final int INDEX_RED_IN = 3;
+/** Execution Confirmation */
+public final EventOutput CNF = new EventOutput();
+/** EVENT BLUE_IN */
+public final EventServer BLUE_IN = (e) -> service_BLUE_IN();
+/** EVENT RED_IN */
+public final EventServer RED_IN = (e) -> service_RED_IN();
+/** EVENT YELLOW_IN */
+public final EventServer YELLOW_IN = (e) -> service_YELLOW_IN();
+/** VAR POS:UINT */
+  public final UINT POS = new UINT();
+/** VAR STYLE:VSTYLE */
+  public final VSTYLE STYLE = new VSTYLE();
+/** VAR WKPC:COLOR */
+  public final COLOR WKPC = new COLOR();
+/** The default constructor. */
+public COLOR_DECIDER(){
+    super();
+  }
+protected synchronized void service_BLUE_IN(){
+  if(eccState == INDEX_START){
+    state_BLUE_IN();
+  }
+}
+protected synchronized void service_RED_IN(){
+  if(eccState == INDEX_START){
+    state_RED_IN();
+  }
+}
+protected synchronized void service_YELLOW_IN(){
+  if(eccState == INDEX_START){
+    state_YELLOW_IN();
+  }
+}
+/** The actions to take upon entering state START. */
+void state_START(){
+   eccState = INDEX_START;
+}
+/** The actions to take upon entering state BLUE_IN. */
+void state_BLUE_IN(){
+   eccState = INDEX_BLUE_IN;
+   alg_BLUE_ALG();
+   CNF.serviceEvent(this);
+   state_START();
+}
+/** The actions to take upon entering state YELLOW_IN. */
+void state_YELLOW_IN(){
+   eccState = INDEX_YELLOW_IN;
+   alg_YELLOW_ALG();
+   CNF.serviceEvent(this);
+   state_START();
+}
+/** The actions to take upon entering state RED_IN. */
+void state_RED_IN(){
+   eccState = INDEX_RED_IN;
+   alg_RED_ALG();
+   CNF.serviceEvent(this);
+   state_START();
+}
+  /** ALGORITHM RED_ALG IN ST */
+public void alg_RED_ALG(){
+POS.value = 0;
+STYLE.value = PALLET;
+WKPC.value = red;
+}
+  /** ALGORITHM BLUE_ALG IN ST */
+public void alg_BLUE_ALG(){
+}
+  /** ALGORITHM YELLOW_ALG IN ST */
+public void alg_YELLOW_ALG(){
+}
+}
